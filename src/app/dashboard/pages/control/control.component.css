@@ -1,0 +1,35 @@
+.wrapper{
+  display: grid;
+  grid-template-columns: 80% auto;
+  padding: 4px;
+}
+
+.wrapper>div:nth-child(1)>div{
+  padding: 4px;
+}
+
+.wrapper>div:nth-child(1){
+  grid-column: 1/2;
+}
+.wrapper>div:nth-child(2){
+  grid-column: 2/3;
+  grid-row: 1/2;
+  padding: 8px;
+}
+
+@media (max-width: 960px){
+  .wrapper{
+    grid-template-columns: 100%;
+    width: 100%;
+  }
+
+  .wrapper>div:nth-child(2){
+    grid-column: 1/2;
+    padding: 4px;
+  }
+
+  .wrapper>div:nth-child(1){
+    grid-row: 2/3;
+  }
+
+}

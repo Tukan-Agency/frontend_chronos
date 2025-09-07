@@ -1,0 +1,495 @@
+<!-- TABLA CLIENTES -->
+<p-table
+	#dt
+	[value]="customers"
+	responsiveLayout="scroll"
+	styleClass="p-datatable-customers"
+	[rows]="10"
+	[showCurrentPageReport]="true"
+	[rowsPerPageOptions]="[10, 25, 50]"
+	responsiveLayout="scroll"
+	[paginator]="true"
+	currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+	[globalFilterFields]="[
+		'sequenceId',
+		'surname',
+		'email',
+		'name',
+		'country.name',
+		'currency.name'
+	]"
+>
+	<ng-template pTemplate="caption">
+		<div class="table-header">
+			<span class="p-input-icon-left max-w-full">
+				<i class="pi pi-search"></i>
+				<input
+					class="max-w-full"
+					pInputText
+					type="text"
+					placeholder="Buscar"
+					(input)="applyFilterGlobal($event, 'contains')"
+				/>
+			</span>
+		</div>
+	</ng-template>
+	<ng-template pTemplate="header">
+		<tr>
+			<th pSortableColumn="sequenceID">
+				<div class="flex justify-content-between align-items-center">
+					<span>ID</span>
+					<p-sortIcon field="sequenceID"></p-sortIcon>
+				</div>
+			</th>
+			<th pSortableColumn="name">
+				<div class="flex justify-content-between align-items-center">
+					<span>Nombres</span>
+					<p-sortIcon field="name"></p-sortIcon>
+				</div>
+			</th>
+			<th pSortableColumn="surname">
+				<div class="flex justify-content-between align-items-center">
+					<span>Apellidos</span>
+					<p-sortIcon field="apellido"></p-sortIcon>
+				</div>
+			</th>
+			<th pSortableColumn="email">
+				<div class="flex justify-content-between align-items-center">
+					<span>
+						<i class="pi pi-envelope mr-2"></i>
+						E-mail
+					</span>
+					<p-sortIcon field="email"></p-sortIcon>
+				</div>
+			</th>
+			<th pSortableColumn="currency">
+				<div class="flex justify-content-between align-items-center">
+					<span>
+						<i class="pi pi-dollar mr-2"></i>
+						Moneda
+					</span>
+					<p-sortIcon field="moneda"></p-sortIcon>
+				</div>
+			</th>
+			<th pSortableColumn="country">
+				<div>
+					<span>
+						<i class="pi pi-flag mr-2"></i>
+						País
+					</span>
+					<p-sortIcon field="country"></p-sortIcon>
+				</div>
+			</th>
+			<th>
+				<div class="flex justify-content-between align-items-center">Ver Más</div>
+			</th>
+			<th>
+				<div class="flex justify-content-between align-items-center">Editar</div>
+			</th>
+			<th>
+				<div class="flex justify-content-between align-items-center">
+					Ver Ordenes
+				</div>
+			</th>
+			<th>
+				<div class="flex justify-content-between align-items-center">
+					Descargar PDF
+				</div>
+			</th>
+			<th>
+				<div class="flex justify-content-between align-items-center">
+					Eliminar usuario
+				</div>
+			</th>
+		</tr>
+	</ng-template>
+	<ng-template pTemplate="body" let-customers>
+		<tr class="p-selectable-row">
+			<td>{{ customers.sequenceId }}</td>
+			<td>{{ customers.name }}</td>
+			<td>{{ customers.surname }}</td>
+			<td>{{ customers.email }}</td>
+			<td>{{ customers.currency.name }}</td>
+			<td>
+				<img [src]="customers.country?.flag" class="ml-2 mr-2" width="30" />
+				<span class="image-text">{{ customers.country?.name }}</span>
+			</td>
+			<td style="text-align: center">
+				<button
+					pButton
+					pRipple
+					icon="pi pi-search-plus"
+					class="p-button-rounded p-button-success mr-2"
+					(click)="showMore(customers)"
+				></button>
+			</td>
+			<td style="text-align: center">
+				<button
+					pButton
+					pRipple
+					icon="pi pi-pencil"
+					class="p-button-rounded p-button-warning mr-2"
+					(click)="openEditClient(customers)"
+				></button>
+			</td>
+			<td style="text-align: center">
+				<button
+					pButton
+					pRipple
+					icon="pi pi-book"
+					class="p-button-rounded p-button-info mr-2"
+					(click)="openOrder(customers)"
+				></button>
+			</td>
+			<td style="text-align: center">
+				<p ><button
+					class="btm-pdf"
+					pRipple
+					 
+					(click)="descargarPDF(customers)"
+				><span class="mingcute--pdf-fill"></span></button></p>
+				
+			</td>
+			<td style="text-align: center">
+				<button
+					pButton
+					pRipple
+					icon="pi pi-times-circle"
+					class="p-button-rounded p-button-danger mr-2"
+					(click)="confirmDelete(customers)"
+				></button>
+			</td>
+		</tr>
+	</ng-template>
+</p-table>
+
+<!-- VER MAS CLIENTE -->
+<p-dialog
+	header="Mas Detalles"
+	[(visible)]="displayMore"
+	[modal]="true"
+	[style]="width > 960 ? { width: '36vw' } : { width: '90%' }"
+	[draggable]="false"
+	[resizable]="false"
+>
+	<div class="grid">
+		<div class="col-12">
+			<div class="surface-card p-4 shadow-2 border-round">
+				<ul class="list-none p-0 m-0">
+					<li
+						class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+					>
+						<div
+							class="text-500 w-12 md:w-8 md:flex-order-0 flex-order-1 font-medium"
+						>
+							<span>
+								<i class="pi pi-mobile mr-2"></i>
+								Celular
+							</span>
+						</div>
+						<div class="text-500 w-2 md:w-2 md:flex-order-0 flex-order-1"></div>
+						<div class="text-900 w-6 font-medium md:w-2 flex justify-content-start">
+							{{ client.contactNumber }}
+						</div>
+					</li>
+					<li class="flex align-items-center py-3 px-2 flex-wrap">
+						<div
+							class="text-500 w-12 md:w-8 md:flex-order-0 flex-order-1 font-medium"
+						>
+							<span>
+								<i class="pi pi-calendar mr-2"></i>
+								Fecha de Nacimiento
+							</span>
+						</div>
+						<div class="text-500 w-2 md:w-2 md:flex-order-0 flex-order-1"></div>
+						<div class="text-900 w-6 font-medium md:w-2 flex justify-content-start">
+							{{ client.birthday | date : "dd/MM/yyyy" }}
+						</div>
+					</li>
+					<li class="flex align-items-center py-3 px-2 flex-wrap">
+						<div
+							class="text-500 w-12 md:w-8 md:flex-order-0 flex-order-1 font-medium"
+						>
+							<span>
+								<i class="pi pi-map-marker mr-2"></i>
+								Dirección
+							</span>
+						</div>
+						<div class="text-500 w-2 md:w-2 md:flex-order-0 flex-order-1"></div>
+						<div class="text-900 w-6 font-medium md:w-2 flex justify-content-start">
+							{{ client.address }}
+						</div>
+					</li>
+					<li class="flex align-items-center py-3 px-2 flex-wrap">
+						<div
+							class="text-500 w-12 md:w-8 md:flex-order-0 flex-order-1 font-medium"
+						>
+							<span>
+								<i class="pi pi-building mr-2"></i>
+								Compañia
+							</span>
+						</div>
+						<div class="text-500 w-2 md:w-2 md:flex-order-0 flex-order-1"></div>
+						<div class="text-900 w-6 font-medium md:w-2 flex justify-content-start">
+							{{ client.company }}
+						</div>
+					</li>
+					<li class="flex align-items-center py-3 px-2 flex-wrap">
+						<div
+							class="text-500 w-12 md:w-8 md:flex-order-0 flex-order-1 font-medium"
+						>
+							<span>
+								<i class="pi pi-whatsapp mr-2"></i>
+								Whatsapp
+							</span>
+						</div>
+						<div class="text-500 w-2 md:w-2 md:flex-order-0 flex-order-1"></div>
+						<div class="text-900 w-6 font-medium md:w-2 flex justify-content-start">
+							{{ client.whatsapp }}
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</p-dialog>
+
+<!-- FORMULARIO EDITAR CLIENTE -->
+<p-dialog
+	(onHide)="deleteData()"
+	[(visible)]="displayModel"
+	[style]="width > 960 ? { width: '45%' } : { width: '90%' }"
+	header="Editar Cliente"
+	[modal]="true"
+	styleClass="p-fluid"
+>
+	<ng-template pTemplate="content">
+		<div class="grid formgrid p-fluid">
+			<div class="field mb-4 col-12 md:col-6">
+				<label for="name" class="font-medium text-900">Nombre</label>
+				<span>
+					<input
+						id="name"
+						type="text"
+						[(ngModel)]="name"
+						class="p-inputtext p-component p-element"
+					/>
+				</span>
+			</div>
+			<div class="field mb-4 col-12 md:col-6">
+				<label for="surname" class="font-medium text-900">Apellido</label>
+				<span>
+					<input
+						id="surname"
+						type="text"
+						[(ngModel)]="surname"
+						class="p-inputtext p-component p-element"
+					/>
+				</span>
+			</div>
+			<div class="field mb-4 col-12 md:col-6">
+				<label for="birthday" class="font-medium text-900">Fecha nacimiento</label>
+				<p-calendar
+					[(ngModel)]="birthday"
+					dateFormat="dd/mm/yy"
+					placeholder="dd/mm/yy"
+				></p-calendar>
+			</div>
+			<div class="field mb-4 col-6">
+				<label for="birthday" class="font-medium text-900">Fecha Actual:</label>
+				<input
+					type="text"
+					disabled
+					[value]="this.selectedCustomers[0].birthday | date : 'MM/dd/yyyy'"
+					class="p-inputtext p-component p-element"
+				/>
+			</div>
+			<div class="field mb-4 col-6">
+				<label for="email" class="font-medium text-900">Correo electronico</label>
+				<span class="p-input-icon-left">
+					<i class="pi pi-envelope"></i>
+					<input
+						id="email"
+						type="email"
+						[(ngModel)]="email"
+						class="p-inputtext p-component p-element"
+					/>
+				</span>
+			</div>
+			<div class="field mb-4 col-12 md:col-6">
+				<label for="address" class="font-medium text-900">Dirección</label>
+				<span class="p-input-icon-left">
+					<i class="pi pi-map-marker"></i>
+					<input
+						id="address"
+						type="text"
+						[(ngModel)]="address"
+						class="p-inputtext p-component p-element"
+					/>
+				</span>
+			</div>
+			<div class="field mb-4 col-12 md:col-6">
+				<label for="contactNumber" class="font-medium text-900">Celular</label>
+				<span class="p-input-icon-left">
+					<i class="pi pi-mobile"></i>
+					<input
+						id="contactNumber"
+						type="text"
+						[(ngModel)]="contactNumber"
+						class="p-inputtext p-component p-element"
+					/>
+				</span>
+			</div>
+			<div class="field mb-4 col-12 md:col-6">
+				<label for="whatsapp" class="font-medium text-900">Whatsapp</label>
+				<span class="p-input-icon-left">
+					<i class="pi pi-whatsapp"></i>
+					<input
+						id="whatsapp"
+						type="text"
+						[(ngModel)]="whatsapp"
+						class="p-inputtext p-component p-element"
+					/>
+				</span>
+			</div>
+			<div class="field mb-4 col-12 md:col-6">
+				<label for="country" class="font-medium text-900">Pais</label>
+				<p-dropdown
+					[options]="countries"
+					[(ngModel)]="country"
+					optionLabel="translations.spa.common"
+					(onChange)="setCurrencyDropBox(country)"
+				></p-dropdown>
+			</div>
+			<div class="field mb-4 col-6">
+				<label for="country" class="font-medium text-900">País Actual:</label>
+				<input
+					type="text"
+					disabled
+					[value]="this.selectedCustomers[0].country!.name"
+					class="p-inputtext p-component p-element"
+				/>
+			</div>
+			<div class="field mb-4 col-12 md:col-6">
+				<label for="company" class="font-medium text-900">Compañia</label>
+				<span class="p-input-icon-left">
+					<i class="pi pi-building"></i>
+					<input
+						id="company"
+						type="text"
+						[(ngModel)]="company"
+						class="p-inputtext p-component p-element"
+					/>
+				</span>
+			</div>
+			<div class="field mb-4 col-12 md:col-6">
+				<label for="currency" class="font-medium text-900">Moneda</label>
+				<p-dropdown
+					[options]="currencys"
+					[(ngModel)]="currency"
+					optionLabel="name"
+					[disabled]="true"
+				></p-dropdown>
+			</div>
+			<div class="field mb-4 col-12 md:col-6">
+				<label for="password" class="font-medium text-900">
+					Cambiar Contraseña
+				</label>
+				<span class="p-input-icon-left">
+					<i class="pi pi-building"></i>
+					<input
+						id="password"
+						type="text"
+						[(ngModel)]="changeUserPassword"
+						class="p-inputtext p-component p-element"
+					/>
+				</span>
+			</div>
+			<div class="field mb-4 col-12 md:col-6">
+				<label for="passwordConfirm" class="font-medium text-900">
+					Confirmar Contraseña
+				</label>
+				<span class="p-input-icon-left">
+					<i class="pi pi-building"></i>
+					<input
+						id="passwordConfirm"
+						type="text"
+						[(ngModel)]="confirmUserPassword"
+						class="p-inputtext p-component p-element"
+					/>
+				</span>
+			</div>
+			<div class="surface-border border-top-1 opacity-50 mb-4 col-12"></div>
+		</div>
+	</ng-template>
+	<ng-template pTemplate="footer">
+		<button
+			pButton
+			pRipple
+			label="Cancelar"
+			icon="pi pi-times"
+			class="p-button-danger p-button-text"
+			(click)="deleteData()"
+		></button>
+		<button
+			pButton
+			pRipple
+			label="Guardar"
+			icon="pi pi-check"
+			class="p-button-success p-button-text"
+			(click)="updateClient()"
+		></button>
+	</ng-template>
+</p-dialog>
+
+<p-dialog
+	(onHide)="deleteData()"
+	[(visible)]="displayModelConfirmDelete"
+	[style]="width > 960 ? { width: '45%' } : { width: '90%' }"
+	header="Eliminar usuario"
+	[modal]="true"
+	styleClass="p-fluid"
+>
+	<ng-template pTemplate="content">
+		<h2>¿Está seguro de querer eliminar este usuario?</h2>
+		<p>{{ currentCustomer.name }}</p>
+	</ng-template>
+	<ng-template pTemplate="footer">
+		<button
+			pButton
+			pRipple
+			label="Cancelar"
+			icon="pi pi-times"
+			class="p-button-danger p-button-text"
+			(click)="closeConfirmDelete()"
+		></button>
+		<button
+			pButton
+			pRipple
+			label="Eliminar"
+			icon="pi pi-check"
+			class="p-button-success p-button-text"
+			(click)="deleteUser()"
+		></button>
+	</ng-template>
+</p-dialog>
+<p-toast></p-toast>
+<style>
+	.mingcute--pdf-fill {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z'/%3E%3Cpath fill='%23ffff' d='M12 2v6.5a1.5 1.5 0 0 0 1.5 1.5H20v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm-.989 9.848a6.22 6.22 0 0 1-2.235 3.872c-.887.716-.076 2.121.988 1.712a6.22 6.22 0 0 1 4.471 0c1.064.41 1.875-.995.988-1.712a6.22 6.22 0 0 1-2.235-3.872c-.177-1.126-1.8-1.127-1.977 0M12 14.303l.806 1.394h-1.61zm2-12.26a2 2 0 0 1 1 .543L19.414 7a2 2 0 0 1 .543 1H14z'/%3E%3C/g%3E%3C/svg%3E");
+}
+button.btm-pdf {
+    background: #d31717d9;
+    height: 35px;
+    width: 36px;
+    border: none;
+    border-radius: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+</style>

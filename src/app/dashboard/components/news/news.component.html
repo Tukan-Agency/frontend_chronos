@@ -1,0 +1,40 @@
+<div class="surface-card shadow-2 border-round p-4">
+    <div class="text-xl text-900 font-medium mb-5">Noticias</div>
+    <ul class="list-none p-0 m-0">
+        <li class="pb-3 border-bottom-1 surface-border">
+            <div class="line-height-3 text-600" style="max-width: 30rem;">
+                    {{noticia}}
+            </div>
+        </li>
+    </ul>
+    <div class="mt-5" *ngIf="role == 1">
+        <button pButton type="button" label="Cambiar Noticia" (click)="openModal()"></button>
+    </div>
+</div>
+
+<!-- FINALIZAR ORDEN -->
+<p-dialog [(visible)]="cambiarNoticiaModal" [style]="{width: '45%'}" header="Cambiar Noticia" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="grid formgrid p-fluid">
+            <!-- ADD ACCIONISTA -->
+            <div class="field mb-4 col-8">
+                <label for="name" class="font-medium text-900">
+                    Noticia
+                </label>
+                <span>
+                    <input id="address" type="text" placeholder="Digite la noticia que desea mostrar"
+                        class="p-inputtext p-component p-element" [(ngModel)]="textNoticia">
+                </span>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-danger p-button-text "
+            (click)="cambiarNoticiaModal=false"></button>
+        <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-success p-button-text" [disabled]="enableButton()"
+            (click)="cambiarNoticia()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-toast></p-toast>

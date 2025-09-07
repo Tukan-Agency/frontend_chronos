@@ -1,0 +1,20 @@
+.edit-wrapper{
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 8px;
+}
+
+.edit-wrapper button{
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 960px){
+  ::ng-deep div.div-change-password-and-information{
+    font-size: medium !important;
+  }
+}
+
+

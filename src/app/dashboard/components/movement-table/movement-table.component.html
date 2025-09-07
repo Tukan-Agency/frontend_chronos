@@ -1,0 +1,71 @@
+<p-table #dt [value]="movementsList" responsiveLayout="scroll" styleClass="p-datatable-customers">
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="name">
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        Nombre
+                    </span>
+                    <p-sortIcon field="name"></p-sortIcon>
+                </div>
+            </th>
+            <th pSortableColumn="name">
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        Tipo
+                    </span>
+                    <p-sortIcon field="name"></p-sortIcon>
+                </div>
+            </th>
+            <th pSortableColumn="currency">
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        Fecha
+                    </span>
+                    <p-sortIcon field="moneda"></p-sortIcon>
+                </div>
+            </th>
+            <th pSortableColumn="currency">
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        Valor
+                    </span>
+                    <p-sortIcon field="moneda"></p-sortIcon>
+                </div>
+            </th>
+            <th *ngIf="!byClient" pSortableColumn="currency">
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        Eliminar
+                    </span>
+                    <p-sortIcon field="moneda"></p-sortIcon>
+                </div>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-movementsList>
+        <tr class="p-selectable-row">
+            <td>{{movementsList.movimiento.clientName}}</td>
+            <td><span
+                    [class]="'customer-badge status-' + movementsList.colorStatus">{{movementsList.movimiento.type}}</span>
+            </td>
+            <td>{{movementsList.movimiento.requestDate | date: 'dd/MM/yyyy' :'+0000'}}</td>
+            <td><span
+                [class]="'customer-badge status-' + movementsList.colorStatus">{{movementsList.valor}}</span></td>
+            <td *ngIf="!byClient" style="text-align: center">
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-times-circle"
+                  class="p-button-rounded p-button-danger mr-2"
+                  (click)="deleteMovement(movementsList.movimiento)"
+                ></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="8">No hay movimientos registrados</td>
+        </tr>
+    </ng-template>
+</p-table>

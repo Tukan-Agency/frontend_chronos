@@ -1,0 +1,83 @@
+{
+    "clientes":[
+        {
+            "id_cliente":1,
+            "nombre": "Walter",
+            "apellido": "Veracruz",
+            "correo": "walter.veracruz@correo.com",
+            "numero_contacto": 50448712,
+            "direccion": "1ra. Avenida 5-103 zona 2",
+            "fecha_nacimiento":"1994-09-19",
+            "compañia":"Telmex",
+            "pais":"Guatemala",
+            "Whastapp":50448712,
+            "divisa":"quetzal"
+        },
+        {
+            "id_cliente":2,
+            "nombre": "Mateo",
+            "apellido": "Benitez",
+            "correo": "mateo.benitez@correo.com",
+            "numero_contacto": 4711474,
+            "direccion": "CALLE AGUSTIN LARA NO. 69-B",
+            "fecha_nacimiento":"1998-09-15",
+            "compañia":"Pepsi",
+            "pais":"Mexico",
+            "Whastapp":4711474,
+            "divisa":"Peso mexicano"
+        },
+        {
+            "id_cliente":3,
+            "nombre": "Nicolas",
+            "apellido": "Carreño",
+            "correo": "nicolas.carreño@correo.com",
+            "numero_contacto": 314475451,
+            "direccion": "CALLE ESPERANZA 35-C",
+            "fecha_nacimiento":"1981-08-08",
+            "compañia":"Bimbo",
+            "pais":"Colombia",
+            "Whastapp":314475451,
+            "divisa":"Peso colombiano"
+        },
+        {
+            "id_cliente":4,
+            "nombre": "Daniel",
+            "apellido": "Estupiñan",
+            "correo": "daniel.estupiñan@correo.com",
+            "numero_contacto": 3184115412,
+            "direccion": "CALLE SOACHINGTON 45-SUR",
+            "fecha_nacimiento":"1997-10-14",
+            "compañia":"Amazon",
+            "pais":"Colombia",
+            "Whastapp":3184115412,
+            "divisa":"Peso colombiano"
+        },
+        {
+            "id_cliente":5,
+            "nombre": "Leonardo",
+            "apellido": "Martinez",
+            "correo": "leonardo.martinez@correo.com",
+            "numero_contacto": 1147487521,
+            "direccion": "1959 NE 153 ST",
+            "fecha_nacimiento":"1975-05-16",
+            "compañia":"Google",
+            "pais":"Estados Unidos",
+            "Whastapp":3184115412,
+            "divisa":"Dolar"
+        },
+        {
+            "id_cliente":6,
+            "nombre": "Felipe",
+            "apellido": "Buitrago",
+            "correo": "felipe.buitrago@correo.com",
+            "numero_contacto": 555401445,
+            "direccion": "AV. 20 DE NOVIEMBRE NO. 1060",
+            "fecha_nacimiento":"1997-10-14",
+            "compañia":"Amazon",
+            "pais":"Mexico",
+            "Whastapp":555401445,
+            "divisa":"Peso Mexicano"
+        }
+    ]
+}
+

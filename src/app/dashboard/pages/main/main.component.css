@@ -1,0 +1,13 @@
+@media (max-width: 960px){
+  ::ng-deep .surface-section{
+    width: 100% !important;
+    height: 60px !important;
+    min-height: auto !important;
+    background-color: #1f2d40 !important;
+    position: static !important;
+  }
+
+  ::ng-deep .min-h-screen{
+    flex-direction: column;
+  }
+}

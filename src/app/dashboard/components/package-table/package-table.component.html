@@ -1,0 +1,167 @@
+<!-- TOOLBAR -->
+<div class="mb-5">
+    <p-toolbar>
+        <div class="p-toolbar-group-left">
+            <!-- <label class="mr-2"><strong>Cliente:</strong> {{nameClient}}</label> -->
+        </div>
+
+        <div class="p-toolbar-group-right">
+            <p-button label="Nuevo paquete" icon="pi pi-plus" class="mr-2" (click)="openNuevoPaquete()"></p-button>
+            <button pButton pRipple label="Lista de paquetes" icon="pi pi-list" class="p-button-help mr-2" (click)="listaDePaquetes()"></button>
+        </div>
+    </p-toolbar>
+</div>
+
+<p-table #dt [value]="packagesList" responsiveLayout="scroll" styleClass="p-datatable-customers">
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="name">
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        Nombre
+                    </span>
+                    <p-sortIcon field="name"></p-sortIcon>
+                </div>
+            </th>
+            <th pSortableColumn="surname">
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        Fecha
+                    </span>
+                    <p-sortIcon field="apellido"></p-sortIcon>
+                </div>
+            </th>
+            <th pSortableColumn="email">
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        <i class="pi pi-info-circle mr-2"></i>
+                        Estado
+                    </span>
+                    <p-sortIcon field="email"></p-sortIcon>
+                </div>
+            </th>
+            <th pSortableColumn="currency">
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        <i class="pi pi-dollar mr-2"></i>
+                        Paquete
+                    </span>
+                    <p-sortIcon field="moneda"></p-sortIcon>
+                </div>
+            </th>
+            <th>
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        <i class="pi pi-plus-circle mr-2"></i>
+                        Actualizar estado
+                    </span>
+                </div>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-package>
+        <tr class="p-selectable-row">
+            <td>{{package.movimiento.clientName}}</td>
+            <td>{{package.movimiento.requestDate | date: 'dd/MM/yyyy'}}</td>
+            <td> <span
+                    [class]="'customer-badge status-' + package.colorStatus">{{package.movimiento.status}}</span>
+            </td>
+            <td>{{package.movimiento.value}}</td>
+            <td>
+                <button pButton pRipple label="Pagado" icon="pi pi-check" iconPos="right" class="p-button-success"
+                    (click)="actualizarEstado(package.movimiento, 'Pagado')"></button>
+                <button pButton pRipple label="En progreso" icon="pi pi-exclamation-circle" iconPos="right" class="p-button-warning ml-2"
+                    (click)="actualizarEstado(package.movimiento, 'En progreso')"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="8">No tiene paquetes vendidos</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<!-- CREAR PAQUETE -->
+<p-dialog [(visible)]="displayModel" [style]="{width: '42%'}" header="Nuevo paquete" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="grid formgrid p-fluid">
+            <!-- ADD ACCIONISTA -->
+            <div class="field mb-4 col-6">
+                <label for="name" class="font-medium text-900">
+                    Nombre Paquete
+                </label>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-box"></i>
+                    <input id="paquete" type="text" placeholder="Digite el nombre del paquete"
+                        class="p-inputtext p-component p-element" [(ngModel)]="nombrePaquete">
+                </span>
+            </div>
+            <div class="field mb-4 col-2">
+                <label for="name" class="font-medium text-900">
+                    Apalancamiento
+                </label>
+                <span>
+                    <p-inputNumber [(ngModel)]="apalancamientoPaquete" [useGrouping]="false" placeholder="0">
+                    </p-inputNumber>
+                </span>
+            </div>
+            <div class="field mb-4 col-3">
+                <label for="name" class="font-medium text-900">
+                    Depósito
+                </label>
+                <span>
+                    <p-inputNumber [(ngModel)]="depositoPaquete" [useGrouping]="false" placeholder="0">
+                    </p-inputNumber>
+                </span>
+            </div>
+            <div class="field mb-4 col-6">
+                <label for="name" class="font-medium text-900">
+                    Tipo de Spread
+                </label>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-info-circle"></i>
+                    <input id="paquete" type="text" placeholder="Digite el tipo de Spread"
+                        class="p-inputtext p-component p-element" [(ngModel)]="spreadPaquete">
+                </span>
+            </div>
+            <div class="field mb-4 col-2">
+                <label for="name" class="font-medium text-900">
+                    Spread PIP
+                </label>
+                <span>
+                    <p-inputNumber [(ngModel)]="spreadPipPaquete" [useGrouping]="false" placeholder="0">
+                    </p-inputNumber>
+                </span>
+            </div>
+            <div class="field mb-4 col-3">
+                <label for="name" class="font-medium text-900">
+                    Ordenes abiertas
+                </label>
+                <span>
+                    <p-inputNumber [(ngModel)]="openOrdersPaquete" [useGrouping]="false" placeholder="0">
+                    </p-inputNumber>
+                </span>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-danger p-button-text "
+            (click)="displayModel=false"></button>
+        <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-success p-button-text"
+            (click)="crearPaquete()"></button>
+    </ng-template>
+</p-dialog>
+
+<!-- CREAR PAQUETE -->
+<p-dialog [(visible)]="displayModelPackage" [style]="{width: '70%'}" header="Lista paquetes" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <app-agregar-paquete [listaPaquete]="true"></app-agregar-paquete>
+    </ng-template>
+    <ng-template pTemplate="footer">
+    </ng-template>
+</p-dialog>
+
+<p-toast></p-toast>

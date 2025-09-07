@@ -1,0 +1,69 @@
+<ul
+    class="list-none py-3 px-5 m-0 surface-section flex align-items-center font-medium overflow-x-auto border-top-1 border-bottom-1 surface-border shadow-2 lg:shadow-none">
+    <li class="pr-3"><a class="cursor-pointer"><i class="pi pi-home text-blue-500"></i></a></li>
+    <li class="px-2"><i class="pi pi-angle-right text-500"></i></li>
+    <li class="px-2"><a class="cursor-pointer text-blue-500 white-space-nowrap">Cliente</a></li>
+    <li class="px-2"><i class="pi pi-angle-right text-500"></i></li>
+    <li class="px-2"><a class="cursor-pointer text-blue-500 white-space-nowrap">Retiro</a></li>
+</ul>
+
+<div class="col-12 lg:col-12 m-auto md:w-8 w-11">
+    <div class="p-3 h-full">
+        <div class="shadow-2 p-3 h-full flex flex-column surface-card" style="border-radius: 6px">
+            <div class="text-900 font-medium text-xl mb-2">Retiro</div>
+            <div class="text-600">Aquí podrás realizar tu retiro</div>
+            <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
+            <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
+            <div *ngIf="itemActivo === 0" class="mt-5">
+                <div class="grid ml-3">
+                    <div class="col-0 lg:col-3"></div>
+                    <label class="mr-3 col-4 lg:col-2">NUMERO DE TARJETA</label>
+                    <input class="col-4 mb-3" type="text" pInputText>
+                    <div class="col-1 lg:col-2"></div>
+
+                    <div class="col-1 lg:col-3"></div>
+                    <label class="mr-3 col-4 lg:col-2">CSV</label>
+                    <input class="col-1 mb-3 lg:col-1" type="text" pInputText>
+                    <div class="col-3 lg:col-5"></div>
+
+                    <div class="col-1 lg:col-3"></div>
+                    <label class="mr-3 col-4 lg:col-2">FECHA DE VEN.</label>
+                    <input class="col-4 mb-3" type="text" pInputText>
+                    <div class="col-1 lg:col-2"></div>
+
+                    <div class="col-1 lg:col-3"></div>
+                    <label class="mr-3 col-4 lg:col-2">MONTO SOLICITADO</label>
+                    <input class="col-4" type="text" pInputText>
+                    <div class="col-1 lg:col-2"></div>
+                </div>
+            </div>
+            <div *ngIf="itemActivo === 1" class="mt-5">
+                <div class="flex flex-column ml-3">
+                    <div class="my-3">
+                      <label class="md:mr-3 md:mb-0 mb-2 w-11 md:w-4 inline-block">CUENTA SWIFT</label>
+                      <input class="w-11 md:w-7 inline-block" type="text" pInputText [(ngModel)]="ibanAccount">
+                    </div>
+
+                    <div class="my-3">
+                      <label class="md:mr-3 md:mb-0 mb-2 w-11 md:w-4 inline-block">NOMBRE DE BANCO</label>
+                      <input class="w-11 md:w-7 inline-block" type="text" pInputText [(ngModel)]="bankName">
+                    </div>
+
+                    <div class="my-3">
+                      <label class="md:mr-3 md:mb-0 mb-2 w-11 md:w-4 inline-block">NÚMERO DE CUENTA</label>
+                      <input class="w-11 md:w-7 inline-block" type="text" pInputText [(ngModel)]="numberAccount">
+                    </div>
+
+                    <div class="my-3">
+                      <label class="md:mr-3 md:mb-0 mb-2 w-11 md:w-4 inline-block">MONTO SOLICITADO</label>
+                      <input class="w-11 md:w-7 inline-block" type="text" pInputText [(ngModel)]="requestedValue">
+                    </div>
+                </div>
+            </div>
+            <hr class="mb-3 mt-3 mx-0 border-top-1 border-none surface-border" />
+            <button pButton pRipple label="Enviar" class="p-3 w-3 align-self-center" (click)="createRequest()"></button>
+        </div>
+    </div>
+</div>
+
+<p-toast></p-toast>

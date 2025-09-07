@@ -1,0 +1,26 @@
+@media (max-width: 960px) {
+  ::ng-deep .responsive-div-login {
+    width: 90% !important;
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 500px) {
+  ::ng-deep .login-wrapper {
+    padding: 0;
+  }
+
+  ::ng-deep .responsive-div-login {
+    padding: 2rem !important;
+    width: 95% !important;
+  }
+
+  ::ng-deep .responsive-div-login div.text-900 {
+    font-size: 2rem !important;
+  }
+
+  ::ng-deep .responsive-div-login span, ::ng-deep .responsive-div-login a {
+    font-size: 1rem !important;
+  }
+}
+

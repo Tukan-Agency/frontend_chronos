@@ -1,0 +1,107 @@
+<!-- START MAIN -->
+<div class="min-h-screen flex flex-column relative flex-auto">
+	<div class="flex flex-column flex-auto">
+		<div class="p-3 md:p-5">
+			<div class="grid justify-content-center md:justify-content-start">
+				<div class="grid wrapper">
+					<div>
+						<div>
+							<!-- START CHART -->
+							<div class="surface-card shadow-2 border-round p-3 mt-2">
+								<div class=" ">
+									<app-account-details></app-account-details>
+								</div>
+							</div>
+							<!-- END CHART -->
+						</div>
+
+						<div>
+							<!-- START CHART -->
+							<app-charts [dataChart]="dataChart"></app-charts>
+							<!-- END CHART -->
+						</div>
+					</div>
+
+					<div>
+						<!-- OPCIONES DE LA GRAFICA -->
+						<div class="surface-card shadow-2 p-3 mt-3 border-50 border-round">
+							<label class="block text-500 font-medium mb-3">
+								Selección de períodos
+							</label>
+							<div class="flex justify-content-between">
+								<div class="field flex flex-column">
+									<label for="yearpicker">Seleccionar Año</label>
+									<p-calendar
+										[(ngModel)]="date1"
+										view="year"
+										dateFormat="yy"
+										inputId="yearpicker"
+										(click)="getDataOnCharts()"
+									></p-calendar>
+								</div>
+							</div>
+							<div class="flex justify-content-between"></div>
+							<div *ngFor="let category of options" class="field-checkbox mb-2">
+								<p-radioButton
+									[inputId]="category.key"
+									name="category"
+									[value]="category"
+									[(ngModel)]="selectedOption"
+									[disabled]="category.key === 'R'"
+								></p-radioButton>
+								<label [for]="category.key">{{ category.name }}</label>
+							</div>
+							<div class="flex justify-content-between mt-3"></div>
+							<div
+								class="field mt-2 flex flex-column"
+								*ngIf="selectedOption.key === 'M'"
+							>
+								<label for="monthpicker">Seleccionar Mes</label>
+								<p-calendar
+									[(ngModel)]="date2"
+									view="month"
+									dateFormat="MM"
+									[readonlyInput]="true"
+									inputId="monthpicker"
+									(ngModelChange)="selectMonth()"
+								></p-calendar>
+							</div>
+							<div class="flex justify-content-between mt-3"></div>
+							<div class="field flex flex-column" *ngIf="selectedOption.key === 'T'">
+								<label for="trimestrePicker">Seleccionar Trimestre</label>
+								<p-dropdown
+									[options]="trimestres"
+									[(ngModel)]="selectedTrimestre"
+									placeholder="Seleccione"
+									optionLabel="name"
+									[showClear]="true"
+									(ngModelChange)="selectTrimestre()"
+								></p-dropdown>
+							</div>
+							<div class="flex justify-content-between mt-3"></div>
+							<div class="field flex flex-column" *ngIf="selectedOption.key === 'S'">
+								<label for="semestrePicker">Seleccionar Semestre</label>
+								<div *ngFor="let category of semestres" class="field-checkbox mb-2">
+									<p-radioButton
+										[inputId]="category.id"
+										name="category"
+										[value]="category"
+										[(ngModel)]="semestreOption"
+										(ngModelChange)="selectSemestre(category.id)"
+									></p-radioButton>
+									<label [for]="category.key">{{ category.name }}</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-12" style="padding-left: 0">
+					<!-- START NEWS -->
+					<app-news></app-news>
+					<!-- END NEWS -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END MAIN -->

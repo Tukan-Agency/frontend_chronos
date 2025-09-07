@@ -1,0 +1,899 @@
+<div class="grid wrapper min-w-320">
+	<div>
+		<div>
+			<!-- START CHART -->
+			<div class="surface-card shadow-2 border-round p-3 mt-2">
+				<div class=" ">
+					<app-account-details></app-account-details>
+				</div>
+			</div>
+			<!-- END CHART -->
+		</div>
+
+		<div>
+			<!-- START CHART -->
+			<app-charts [dataChart]="dataChart"></app-charts>
+			<!-- END CHART -->
+		</div>
+	</div>
+
+	<div>
+		<!-- OPCIONES DE LA GRAFICA -->
+		<div class="surface-card shadow-2 p-3 mt-3 border-50 border-round">
+			<label class="block text-500 font-medium mb-3">Opciones</label>
+			<div class="flex justify-content-between">
+				<div class="field flex flex-column">
+					<label for="yearpicker">Seleccionar Año</label>
+					<p-calendar
+						[(ngModel)]="date1"
+						view="year"
+						dateFormat="yy"
+						inputId="yearpicker"
+						(click)="getDataOnCharts()"
+					></p-calendar>
+				</div>
+			</div>
+			<div class="flex justify-content-between"></div>
+			<div *ngFor="let category of options" class="field-checkbox mb-2">
+				<p-radioButton
+					[inputId]="category.key"
+					name="category"
+					[value]="category"
+					[(ngModel)]="selectedOption"
+					[disabled]="category.key === 'R'"
+				></p-radioButton>
+				<label [for]="category.key">{{ category.name }}</label>
+			</div>
+			<div class="flex justify-content-between mt-3"></div>
+			<div class="field mt-2 flex flex-column" *ngIf="selectedOption.key === 'M'">
+				<label for="monthpicker">Seleccionar Mes</label>
+				<p-calendar
+					[(ngModel)]="date2"
+					view="month"
+					dateFormat="MM"
+					[readonlyInput]="true"
+					inputId="monthpicker"
+					(ngModelChange)="selectMonth()"
+				></p-calendar>
+			</div>
+			<div class="flex justify-content-between mt-3"></div>
+			<div class="field flex flex-column" *ngIf="selectedOption.key === 'T'">
+				<label for="trimestrePicker">Seleccionar Trimestre</label>
+				<p-dropdown
+					[options]="trimestres"
+					[(ngModel)]="selectedTrimestre"
+					placeholder="Seleccione"
+					optionLabel="name"
+					[showClear]="true"
+					(ngModelChange)="selectTrimestre()"
+				></p-dropdown>
+			</div>
+			<div class="flex justify-content-between mt-3"></div>
+			<div class="field flex flex-column" *ngIf="selectedOption.key === 'S'">
+				<label for="semestrePicker">Seleccionar Semestre</label>
+				<div *ngFor="let category of semestres" class="field-checkbox mb-2">
+					<p-radioButton
+						[inputId]="category.id"
+						name="category"
+						[value]="category"
+						[(ngModel)]="semestreOption"
+						(ngModelChange)="selectSemestre(category.id)"
+					></p-radioButton>
+					<label [for]="category.key">{{ category.name }}</label>
+				</div>
+			</div>
+			<button class="btn-report" (click)="generatePDF()">
+				 
+				Descargar PDF
+			</button>
+		</div>
+	</div>
+</div>
+
+<div class="col-12">
+	<!-- TOOLBAR -->
+	<div class="mb-5" *ngIf="byClient">
+		<p-toolbar>
+			<div class="p-toolbar-group-left">
+				<label class="mr-2">
+					<strong>Cliente:</strong>
+					{{ nameClient }}
+				</label>
+			</div>
+
+			<div class="p-toolbar-group-right">
+				<p-button
+					label="Nueva orden"
+					(click)="openNuevaOrden()"
+					icon="pi pi-plus"
+					class="mr-2"
+				></p-button>
+				<p-button label="Volver" styleClass="p-button-danger mr-2"></p-button>
+			</div>
+		</p-toolbar>
+	</div>
+
+	<!-- TABLA CLIENTES -->
+	<p-table
+		#dt
+		[value]="ordersList"
+		responsiveLayout="scroll"
+		styleClass="p-datatable-customers"
+	>
+		<ng-template pTemplate="header">
+			<tr>
+				<th pSortableColumn="name">
+					<div class="flex justify-content-between align-items-center">
+						<span>Operacion</span>
+						<p-sortIcon field="name"></p-sortIcon>
+					</div>
+				</th>
+				<th pSortableColumn="surname">
+					<div class="flex justify-content-between align-items-center">
+						<span>Fecha</span>
+						<p-sortIcon field="apellido"></p-sortIcon>
+					</div>
+				</th>
+				<th pSortableColumn="email">
+					<div class="flex justify-content-between align-items-center">
+						<span>
+							<i class="pi pi-info-circle mr-2"></i>
+							Estado
+						</span>
+						<p-sortIcon field="email"></p-sortIcon>
+					</div>
+				</th>
+				<th pSortableColumn="currency">
+					<div class="flex justify-content-between align-items-center">
+						<span>
+							<i class="pi pi-dollar mr-2"></i>
+							Capital
+						</span>
+						<p-sortIcon field="moneda"></p-sortIcon>
+					</div>
+				</th>
+				<th pSortableColumn="currency">
+					<div class="flex justify-content-between align-items-center">
+						<span>
+							<i class="pi pi-dollar mr-2"></i>
+							Ganancia
+						</span>
+						<p-sortIcon field="moneda"></p-sortIcon>
+					</div>
+				</th>
+				<th pSortableColumn="currency">
+					<div class="flex justify-content-between align-items-center">
+						<span>
+							<i class="pi pi-dollar mr-2"></i>
+							Perdida
+						</span>
+						<p-sortIcon field="moneda"></p-sortIcon>
+					</div>
+				</th>
+				<th pSortableColumn="currency">
+					<div class="flex justify-content-between align-items-center">
+						<span>
+							<i class="pi pi-dollar mr-2"></i>
+							Retiros
+						</span>
+						<p-sortIcon field="moneda"></p-sortIcon>
+					</div>
+				</th>
+				<th>
+					<div class="flex justify-content-between align-items-center">
+						<span>
+							<i class="pi pi-plus-circle mr-2"></i>
+							Ver Más
+						</span>
+					</div>
+				</th>
+				<th *ngIf="byClient">
+					<div class="flex justify-content-between align-items-center">
+						<span>
+							<i class="pi pi-pencil mr-2"></i>
+							Editar
+						</span>
+					</div>
+				</th>
+				<th *ngIf="byClient">
+					<div class="flex justify-content-between align-items-center">
+						<span>
+							<i class="pi pi-times-circle mr-2"></i>
+							Eliminar
+						</span>
+					</div>
+				</th>
+				<th *ngIf="byClient">
+					<div class="flex justify-content-between align-items-center">
+						<span>
+							<i class="pi pi-plus-circle mr-2"></i>
+							Actualizar estado
+						</span>
+					</div>
+				</th>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="body" let-ordersList>
+			<tr class="p-selectable-row">
+				<td>#{{ ordersList.orders.operationNumber }}</td>
+				<td>
+					{{ ordersList.orders.operationDate | date : "dd/MM/yyyy" : "+0000" }}
+				</td>
+				<td>
+					<span [class]="'customer-badge status-' + ordersList.colorStatus">
+						{{ ordersList.orders.operationStatus }}
+					</span>
+				</td>
+				<td style="text-align: center">
+					${{ ordersList.total > 0 ? ordersList.total : "0" }}.00
+				</td>
+				<td style="text-align: center">
+					{{
+						ordersList.valorFinal[1] !== "-" &&
+						(!ordersList.isWithdrawl || ordersList.isCapital)
+							? ordersList.valorFinal
+							: "$0.00"
+					}}
+				</td>
+				<td style="text-align: center">
+					{{
+						ordersList.valorFinal[1] === "-" &&
+						(!ordersList.isWithdrawl || ordersList.isCapital)
+							? ordersList.valorFinal
+							: "$0.00"
+					}}
+				</td>
+				<td
+					*ngIf="ordersList.isCapital && ordersList.isWithdrawl"
+					style="text-align: center"
+				>
+					${{ ordersList.total < 0 ? ordersList.total : "0.00" }}
+				</td>
+				<td
+					*ngIf="!ordersList.isCapital && ordersList.isWithdrawl"
+					style="text-align: center"
+				>
+					{{ ordersList.valorFinal }}
+				</td>
+				<td
+					*ngIf="
+						(!ordersList.isWithdrawl && !ordersList.isCapital) ||
+						(!ordersList.isWithdrawl && ordersList.isCapital)
+					"
+					style="text-align: center"
+				>
+					${{ "0.00" }}
+				</td>
+				<td style="text-align: center">
+					<button
+						pButton
+						pRipple
+						icon="pi pi-search"
+						(click)="showMore(ordersList.orders)"
+						class="p-button-rounded p-button-success mr-2"
+					></button>
+				</td>
+
+				<td *ngIf="byClient" style="text-align: center">
+					<button
+						[disabled]="
+							ordersList.colorStatus === 'Finalizado' ||
+							ordersList.colorStatus === 'Cancelado'
+						"
+						pButton
+						pRipple
+						icon="pi pi-pencil"
+						(click)="showEdit(ordersList.orders)"
+						class="p-button-rounded p-button-success mr-2"
+					></button>
+				</td>
+
+				<td *ngIf="byClient" style="text-align: center">
+					<button
+						pButton
+						pRipple
+						icon="pi pi-times-circle"
+						(click)="deleteSelected(ordersList.orders)"
+						class="p-button-rounded p-button-danger mr-2"
+					></button>
+				</td>
+
+				<td
+					*ngIf="
+						ordersList.orders.operationStatus !== 'Cancelado' &&
+						ordersList.orders.operationStatus !== 'Finalizado' &&
+						byClient
+					"
+				>
+					<button
+						*ngIf="ordersList.orders.isCapital || ordersList.orders.isWithdrawl"
+						pButton
+						pRipple
+						label="Finalizar"
+						class="p-button-success"
+						(click)="actualizarFinalizadoCapital(ordersList.orders, ordersList.total)"
+					></button>
+					<button
+						*ngIf="!ordersList.orders.isCapital && !ordersList.orders.isWithdrawl"
+						pButton
+						pRipple
+						label="Finalizar"
+						class="p-button-success"
+						(click)="openDialogFinalizado(ordersList.orders, ordersList.total)"
+					></button>
+					<button
+						pButton
+						pRipple
+						label="Cancelar"
+						class="p-button-danger md:ml-2 ml-0"
+						(click)="actualizar(ordersList.orders, 'Cancelado')"
+					></button>
+				</td>
+				<td
+					*ngIf="
+						(ordersList.orders.operationStatus === 'Cancelado' ||
+							ordersList.orders.operationStatus === 'Finalizado') &&
+						byClient
+					"
+					style="text-align: center"
+				>
+					N/A
+				</td>
+			</tr>
+		</ng-template>
+		<ng-template pTemplate="emptymessage">
+			<tr class="min-w-full">
+				<td colspan="12">Este usuario no tiene ordenes</td>
+			</tr>
+		</ng-template>
+	</p-table>
+
+	<!-- VER MAS -->
+	<p-dialog
+		header="Detalles de la orden"
+		[(visible)]="displayMore"
+		[modal]="true"
+		[style]="width > 960 ? { width: '60vw' } : { width: '90%' }"
+		[draggable]="false"
+		[resizable]="false"
+		(onHide)="closeMore()"
+	>
+		<div class="grid">
+			<div class="col-12">
+				<div class="surface-card p-4 shadow-2 border-round">
+					<div class="text-900 md:flex-order-0 flex-order-1 font-medium mb-2">
+						<span>
+							El movimiento
+							<span [class]="'customer-badge status-new'">
+								#{{ orderSelected.operationNumber }}
+							</span>
+							se realizó el
+							<span [class]="'customer-badge status-new'">
+								{{ orderSelected.operationDate | date : "dd/MM/yyyy" }}
+							</span>
+							y está actualmente
+							<span [class]="'customer-badge status-' + colorStatus">
+								{{ orderSelected.operationStatus }}
+							</span>
+							.
+						</span>
+					</div>
+					<ul class="list-none p-0 m-0">
+						<!-- ACCIONISTAS SECTION -->
+						<li class="flex align-items-center py-3 px-2 flex-wrap">
+							<div
+								class="text-900 w-8 md:w-8 md:flex-order-0 flex-order-1 font-medium"
+							>
+								<span>CUENTA</span>
+							</div>
+							<div class="text-500 w-2 md:w-2 md:flex-order-0 flex-order-1"></div>
+							<div
+								class="text-900 w-6 font-medium md:w-2 hidden justify-content-end md:flex"
+							>
+								TOTAL
+							</div>
+						</li>
+						<div
+							class="flex align-items-center border-top-1 surface-border flex-wrap"
+						></div>
+						<li
+							class="flex md:flex-row flex-column md:justify-content-between align-items-start py-3 px-2"
+							*ngFor="let accionistas of orderSelected.operationActions"
+						>
+							<div
+								class="text-500 w-8 md:w-8 md:flex-order-0 flex-order-0 font-medium"
+							>
+								<span>
+									<i class="pi pi-chart-line mr-2"></i>
+									{{ accionistas.name }} x{{ accionistas.quantity }}
+								</span>
+							</div>
+							<div
+								class="text-900 w-6 font-medium md:w-2 flex md:justify-content-end justify-content-start"
+							>
+								${{ accionistas.benefit }}.00
+							</div>
+						</li>
+						<div
+							class="flex align-items-center border-top-1 surface-border flex-wrap"
+						></div>
+						<li
+							class="flex md:flex-row flex-column md:justify-content-between align-items-start py-3 px-2"
+						>
+							<div
+								class="text-500 w-8 md:w-8 md:flex-order-0 flex-order-0 font-medium"
+							>
+								<span>
+									<i class="pi pi-dollar mr-2"></i>
+									Total
+								</span>
+							</div>
+							<div
+								class="text-900 w-6 font-medium md:w-2 flex md:justify-content-end justify-content-start"
+							>
+								${{ total }}.00 USD
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</p-dialog>
+
+	<!--Edit order-->
+
+	<p-dialog
+		header="Editar la orden"
+		[(visible)]="displayEdit"
+		[modal]="true"
+		[style]="width > 960 ? { width: '60vw' } : { width: '90%' }"
+		[draggable]="false"
+		[resizable]="false"
+		(onHide)="closeMore()"
+	>
+		<div class="grid">
+			<div class="col-12">
+				<div class="surface-card p-4 shadow-2 border-round">
+					<div class="text-900 md:flex-order-0 flex-order-1 font-medium mb-2">
+						<span>
+							La operacion
+							<span [class]="'customer-badge status-new'">
+								#{{ orderSelected.operationNumber }}
+							</span>
+							se realizó el
+							<input
+								type="date"
+								class="p-inputtext p-component p-element w-4"
+								[value]="editDate"
+								[(ngModel)]="editDate"
+							/>
+							y está actualmente
+							<span [class]="'customer-badge status-' + colorStatus">
+								{{ orderSelected.operationStatus }}
+							</span>
+							.
+						</span>
+					</div>
+					<ul class="list-none p-0 m-0">
+						<!-- ACCIONISTAS SECTION -->
+						<!--          <li class="flex align-items-center py-3 px-2 flex-wrap">-->
+						<!--            <div class="text-900 w-8 md:w-8 md:flex-order-0 flex-order-1 font-medium">-->
+						<!--                            <span>-->
+						<!--                                CUENTA-->
+						<!--                            </span>-->
+						<!--            </div>-->
+						<!--            <div class="text-500 w-2 md:w-2 md:flex-order-0 flex-order-1">-->
+						<!--            </div>-->
+						<!--            <div class="text-900 w-6 font-medium md:w-2 flex justify-content-end">-->
+						<!--              TOTAL-->
+						<!--            </div>-->
+						<!--          </li>-->
+						<div
+							class="flex align-items-center border-top-1 surface-border flex-wrap mt-5"
+						></div>
+						<!--          <li-->
+						<!--            [class]=-->
+						<!--              "'grid py-3 px-2 surface-border ' + (-->
+						<!--                newActions.length > 1 ? 'li-grid-wrapper' : 'li-grid-wrapper-whitout-button'-->
+						<!--              )"-->
+						<!--              *ngFor="let accionistas of orderSelected.operationActions">-->
+						<li
+							class="flex border-y-1 border-blue-50 py-4"
+							style="border-collapse: collapse"
+							*ngFor="let accionistas of orderSelected.operationActions"
+						>
+							<div class="text-500 font-medium w-12">
+								<span class="flex flex-column md:flex-row">
+									<div class="flex align-items-center md:w-4 w-auto my-2 md:my-0">
+										<i class="pi pi-chart-line mr-2"></i>
+										<p class="mb-0">Nombre: {{ accionistas.name }}</p>
+									</div>
+									<div class="flex align-items-center md:pl-2 my-2 md:my-0">
+										<label class="md:w-auto w-4 md:mr-2 mr-0" [for]="accionistas.name">
+											Cantidad
+										</label>
+										<input
+											type="number"
+											class="p-inputtext p-component p-element md:w-6 w-8"
+											[name]="accionistas.name"
+											[value]="accionistas.quantity"
+											(keyup)="changeValor(accionistas.name, $event, true)"
+											(change)="changeValor(accionistas.name, $event, true)"
+										/>
+									</div>
+									<div
+										class="text-500 font-medium flex justify-content-start align-items-center md:pl-2 my-2 md:my-0"
+									>
+										<label
+											class="md:w-auto w-4 md:mr-2 mr-0"
+											[for]="accionistas.name + 'valor'"
+										>
+											Valor
+										</label>
+										<input
+											type="number"
+											class="p-inputtext p-component p-element md:w-6 w-8"
+											[name]="accionistas.name + 'valor'"
+											[value]="accionistas.benefit"
+											(keyup)="changeValor(accionistas.name, $event, false)"
+											(change)="changeValor(accionistas.name, $event, false)"
+										/>
+									</div>
+									<button
+										*ngIf="newActions.length > 1"
+										class="p-button my-2 md:my-0 md:ml-2 md:w-3 w-auto justify-content-center"
+										(click)="removeAction(accionistas.name)"
+									>
+										<i class="pi pi-times-circle mr-2"></i>
+										Quitar
+									</button>
+								</span>
+							</div>
+						</li>
+						<div
+							class="flex align-items-center border-top-1 surface-border flex-wrap"
+						></div>
+					</ul>
+					<div class="flex justify-content-center pt-4">
+						<button class="p-element p-button p-component" (click)="editOrder()">
+							Actualizar orden
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</p-dialog>
+
+	<!-- CREAR ORDEN -->
+	<p-dialog
+		[(visible)]="displayModel"
+		[style]="
+			width > 900 ? { width: '60%' } : { width: '90%', 'min-width': '300px' }
+		"
+		header="Nueva orden #{{ numOrdenNueva }}"
+		[modal]="true"
+		styleClass="p-fluid"
+	>
+		<ng-template pTemplate="content">
+			<div class="grid formgrid p-fluid">
+				<!-- LISTA ACCIONISTAS -->
+				<div class="col-12 mb-4 ml-2">
+					<ul *ngFor="let action of accionistas" class="font-medium mb-1">
+						<li>
+							<span class="text-900">{{ action.name }}:</span>
+							<span class="text-500">
+								${{ action.benefit }}.00, x{{ action.quantity }}
+							</span>
+							<i
+								class="pi pi-trash ml-2"
+								style="cursor: pointer"
+								(click)="removeAccionista(action.name)"
+							></i>
+						</li>
+					</ul>
+				</div>
+				<!-- ADD ACCIONISTA -->
+				<div class="field mb-4 sm:col-8 col-12">
+					<label for="name" class="font-medium text-900">Nombre</label>
+					<span class="p-input-icon-left">
+						<i class="pi pi-building"></i>
+						<input
+							id="address"
+							type="text"
+							placeholder="Ingrese movimiento"
+							class="p-inputtext p-component p-element"
+							[(ngModel)]="accionistaName"
+						/>
+					</span>
+				</div>
+				<div class="field mb-4 sm:col-2 col-12">
+					<label for="name" class="font-medium text-900">Cantidad</label>
+					<span>
+						<p-inputNumber
+							[(ngModel)]="accionistaQuantity"
+							[useGrouping]="false"
+							placeholder="0"
+						></p-inputNumber>
+					</span>
+				</div>
+				<div class="field mb-4 sm:col-2 col-12">
+					<label for="name" class="font-medium text-900">Precio</label>
+					<span>
+						<p-inputNumber
+							[(ngModel)]="accionistaBenefit"
+							[useGrouping]="false"
+							placeholder="USD"
+						></p-inputNumber>
+					</span>
+				</div>
+				<!-- BUTTONS -->
+				<div
+					class="flex flex-wrap flex-column sm:flex-row w-full justify-content-center align-items-center"
+				>
+					<div class="field mb-4 sm:col-6 col-11">
+						<p-button
+							*ngIf="!showAddtoCapital"
+							(onClick)="addAccionista()"
+							label="Agregar movimiento"
+							icon="pi pi-plus"
+							styleClass="p-button-info mr-2"
+						></p-button>
+					</div>
+					<div class="field mb-4 sm:col-6 col-11">
+						<p-button
+							*ngIf="!orderfromCapital"
+							(onClick)="addToCapital()"
+							label="Agregar capital"
+							icon="pi pi-plus"
+							styleClass="p-button-info mr-2"
+						></p-button>
+					</div>
+					<div class="field mb-4 sm:col-6 col-11">
+						<p-button
+							*ngIf="!orderfromCapitalWithdrawl"
+							(onClick)="capitalWithdrawl()"
+							label="Retirar de capital"
+							icon="pi pi-plus"
+							styleClass="p-button-info mr-2"
+						></p-button>
+					</div>
+					<div class="field mb-4 sm:col-6 col-11">
+						<p-button
+							*ngIf="!orderfromProfitWithdrawl"
+							(onClick)="profitWithdrawl()"
+							label="Retirar de ganancia"
+							icon="pi pi-plus"
+							styleClass="p-button-info mr-2"
+						></p-button>
+					</div>
+				</div>
+			</div>
+		</ng-template>
+		<ng-template pTemplate="footer">
+			<button
+				pButton
+				pRipple
+				label="Cancelar"
+				icon="pi pi-times"
+				class="p-button-danger p-button-text"
+				(click)="displayModel = false"
+			></button>
+			<button
+				pButton
+				pRipple
+				label="Guardar"
+				icon="pi pi-check"
+				class="p-button-success p-button-text"
+				(click)="crearOrden()"
+			></button>
+		</ng-template>
+	</p-dialog>
+
+	<!-- FINALIZAR ORDEN -->
+	<p-dialog
+		[(visible)]="displayFinalizado"
+		[style]="{ width: '45%' }"
+		header="Finalizar Orden #{{ orderSelected.operationNumber }}"
+		[modal]="true"
+		styleClass="p-fluid"
+	>
+		<ng-template pTemplate="content">
+			<div class="grid formgrid p-fluid">
+				<!-- ADD ACCIONISTA -->
+				<div class="field mb-4 col-8">
+					<label for="Ganancia" class="font-medium text-900">Ganancia</label>
+					<span>
+						<p-inputNumber
+							id="Ganancia"
+							[(ngModel)]="totalFinalizadoGanancia"
+							[useGrouping]="false"
+							placeholder="USD"
+						></p-inputNumber>
+					</span>
+				</div>
+				<div class="field mb-4 col-8">
+					<label for="Perdida" class="font-medium text-900">Perdida</label>
+					<span>
+						<p-inputNumber
+							id="Perdida"
+							[(ngModel)]="totalFinalizadoPerdida"
+							[useGrouping]="false"
+							placeholder="USD"
+						></p-inputNumber>
+					</span>
+				</div>
+			</div>
+		</ng-template>
+		<ng-template pTemplate="footer">
+			<button
+				pButton
+				pRipple
+				label="Cancelar"
+				icon="pi pi-times"
+				class="p-button-danger p-button-text"
+				(click)="displayFinalizado = false"
+			></button>
+			<button
+				pButton
+				pRipple
+				label="Guardar"
+				icon="pi pi-check"
+				class="p-button-success p-button-text"
+				(click)="actualizarFinalizado('Finalizado')"
+			></button>
+		</ng-template>
+	</p-dialog>
+
+	<p-toast></p-toast>
+</div>
+<div
+	class="documento-oculto"
+	style="width: 50%; padding: 20px"
+	id="pdf-content"
+>
+	<!-- INCLUYE AQUÍ toda la sección que va desde <app-account-details> hasta la tabla -->
+	<!-- y agrega si quieres un encabezado visual aquí -->
+	<div
+		style="display: flex; justify-content: space-between; align-items: center"
+	>
+		<img src="assets/Img/chronologo.png" alt="Logo" width="180" />
+		<div style="text-align: right; font-size: 12px">
+			<app-account-details></app-account-details>
+		</div>
+	</div>
+
+	<h3 style="text-align: center; margin: 20px 0">REPORTE DE MOVIMIENTOS</h3>
+
+	<table
+		border="1"
+		width="100%"
+		cellpadding="5"
+		style="border-collapse: collapse; font-size: 12px"
+	>
+		<thead style="background-color: #f0f0f0">
+			<tr>
+				<th>Operación</th>
+				<th>Fecha</th>
+				<th>Estado</th>
+				<th>$ Capital</th>
+				<th>$ Ganancia</th>
+				<th>$ Pérdida</th>
+				<th>$ Retiros</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let order of ordersList">
+				<td>#{{ order.orders.operationNumber }}</td>
+				<td>{{ order.orders.operationDate | date : "dd/MM/yyyy" }}</td>
+				<td>
+					<span [ngClass]="'colors-' + order.colorStatus">
+						{{ order.orders.operationStatus }}
+					</span>
+				</td>
+				<td style="text-align: right">
+					{{ order.orders.isCapital ? order.total : "0.00" }}
+				</td>
+				<td style="text-align: right">
+					{{
+						order.valorFinal[1] !== "-" && !order.orders.isWithdrawl
+							? order.valorFinal
+							: "$0.00"
+					}}
+				</td>
+				<td style="text-align: right">
+					{{
+						order.valorFinal[1] === "-" && !order.orders.isWithdrawl
+							? order.valorFinal
+							: "$0.00"
+					}}
+				</td>
+				<td style="text-align: right">
+					{{ order.orders.isWithdrawl ? order.total : "0.00" }}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="summary-box mt-4 p-3 surface-card border-round shadow-2 text-sm">
+		<h4 style="margin-bottom: 1rem">Resumen de Totales</h4>
+		<table style="width: 100%; border-collapse: collapse; text-align: center">
+			<thead>
+				<tr>
+					<th>Capital</th>
+					<th>Ganancia</th>
+					<th>Pérdida</th>
+					<th>Retiros</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>${{ totalCapital | number : "1.2-2" }}</td>
+					<td>${{ totalGanancia | number : "1.2-2" }}</td>
+					<td>${{ totalPerdida | number : "1.2-2" }}</td>
+					<td>${{ totalRetiros | number : "1.2-2" }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<br />
+	<p style="font-size: 11px">
+		Informe generado el {{ date | date : "dd/MM/yyyy" }} por solicitud del
+		usuario.
+	</p>
+	<p style="font-size: 11px">
+		Autenticación:
+		<strong style="font-family: monospace">{{ authCode }}</strong>
+	</p>
+</div>
+
+<style>
+	button.btn-report:hover {
+		transition: 0.3s;
+		cursor: pointer;
+		background: #ff000014;
+	}
+	button.btn-report {
+		padding: 15px;
+		background: #ff000000;
+		border-radius: 9px;
+		transition: 0.3s;
+		font-size: 13pt;
+		color: #af0000;
+		border: solid 1px;
+	}
+	app-account-details
+		.surface-card.shadow-2.border-round.p-3.mt-2.ng-star-inserted {
+		background: #fff !important;
+		box-shadow: none !important;
+		font-size: 10pt !important;
+	}
+	.documento-oculto {
+		display: none;
+	}
+	.documento-mostrar {
+		display: block;
+	}
+	.colors-Finalizado {
+		background: #bbff9a82;
+		margin: 4px;
+		text-align: center;
+		border-radius: 5px;
+		padding: 2px;
+		color: #00450c;
+	}
+	.colors-Cancelado {
+		background: #ff9a9a82;
+		margin: 4px;
+		text-align: center;
+		border-radius: 5px;
+		padding: 2px;
+		color: #450000;
+	}
+	.colors-En {
+		background: #9abaff82;
+		margin: 4px;
+		text-align: center;
+		border-radius: 5px;
+		padding: 2px;
+		color: #002645;
+	}
+</style>

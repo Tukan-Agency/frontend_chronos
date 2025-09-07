@@ -1,0 +1,38 @@
+<ul
+	class="list-none py-3 px-5 m-0 surface-section flex align-items-center font-medium overflow-x-auto border-top-1 border-bottom-1 surface-border shadow-2 lg:shadow-none"
+>
+	<li class="pr-3">
+		<a class="cursor-pointer"><i class="pi pi-home text-blue-500"></i></a>
+	</li>
+	<li class="px-2"><i class="pi pi-angle-right text-500"></i></li>
+	<li class="px-2" *ngIf="role == 1">
+		<a class="cursor-pointer text-blue-500 white-space-nowrap">Administrador</a>
+	</li>
+	<li class="px-2" *ngIf="role == 2">
+		<a class="cursor-pointer text-blue-500 white-space-nowrap">Cliente</a>
+	</li>
+	<li class="px-2" *ngIf="byClient">
+		<i class="pi pi-angle-right text-500"></i>
+	</li>
+	<li class="px-2" *ngIf="byClient">
+		<a class="cursor-pointer text-blue-500 white-space-nowrap">
+			Lista de Clientes
+		</a>
+	</li>
+	<li class="px-2"><i class="pi pi-angle-right text-500"></i></li>
+	<li class="px-2">
+		<a class="cursor-pointer text-blue-500 white-space-nowrap">
+			Lista de Ordenes
+		</a>
+	</li>
+</ul>
+<div class="min-h-screen flex flex-column relative flex-auto">
+	<div class="flex flex-column flex-auto">
+		<div class="p-4 md:p-5 min-w-320">
+			<div class="grid justify-content-center md:justify-content-start">
+				<!--                  <app-order-table style="max-width: 82%;display: block;"></app-order-table>-->
+				<app-order-table class="overflow-hidden"></app-order-table>
+			</div>
+		</div>
+	</div>
+</div>

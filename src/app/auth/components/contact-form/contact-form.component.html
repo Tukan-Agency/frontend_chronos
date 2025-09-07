@@ -1,0 +1,96 @@
+<div class="grid formgrid p-fluid mt-5">
+	<form
+		class="grid formgrid p-fluid justify-content-center"
+		autocomplete="off"
+		[formGroup]="contactForm"
+		(ngSubmit)="nextStep()"
+	>
+		<div class="field mb-3 col-12">
+			<div class="field-checkbox">
+				<p-checkbox
+					formControlName="checked"
+					[binary]="true"
+					inputId="binary"
+				></p-checkbox>
+				<label for="binary" class="font-medium text-900">
+					Número de Whatsapp diferente al número de contacto?
+				</label>
+			</div>
+		</div>
+		<div class="field mb-4 col-12 md:col-6">
+			<label for="contactNumber" class="font-medium text-900">
+				Numero de contacto
+			</label>
+			<p-inputNumber
+				mode="decimal"
+				[useGrouping]="false"
+				id="contactNumber"
+				formControlName="contactNumber"
+			></p-inputNumber>
+		</div>
+		<div class="field mb-4 col-12 md:col-6">
+			<label for="whatsapp" class="font-medium text-900">Whatsapp</label>
+			<p-inputNumber
+				mode="decimal"
+				[useGrouping]="false"
+				id="whatsapp"
+				formControlName="whatsapp"
+				[disabled]="!contactForm.value.checked"
+			></p-inputNumber>
+		</div>
+		<div class="field mb-4 col-12">
+			<label for="address" class="font-medium text-900">Direccion</label>
+			<input
+				id="address"
+				type="text"
+				placeholder="Digite su lugar de residencia"
+				formControlName="address"
+				class="p-inputtext p-component p-element"
+			/>
+		</div>
+		<div class="field mb-4 col-12">
+			<label for="company" class="font-medium text-900">Empresa</label>
+			<input
+				id="company"
+				type="text"
+				placeholder="Digite el nombre de su empresa"
+				formControlName="company"
+				class="p-inputtext p-component p-element"
+			/>
+		</div>
+		<div class="flex justify-content-between w-full px-2 gap-1">
+			<button
+				type="button"
+				pbutton
+				pripple=""
+				label="Create Invoice"
+				icon="pi pi-angle-left"
+				class="p-element p-ripple w-auto p-button p-component"
+				(click)="previousStep()"
+			>
+				<span
+					class="p-button-icon p-button-icon-left pi pi-angle-left"
+					aria-hidden="true"
+				></span>
+				<span class="p-button-label">Anterior</span>
+				<span class="p-ink"></span>
+			</button>
+			<button
+				type="submit"
+				pbutton
+				pripple=""
+				label="Create Invoice"
+				icon="pi pi-angle-right"
+				class="p-element p-ripple w-auto p-button p-component"
+				[disabled]="!this.contactForm.valid"
+			>
+				<span
+					class="p-button-icon p-button-icon-right pi pi-angle-right"
+					aria-hidden="true"
+				></span>
+				<span class="p-button-label">Siguiente</span>
+				<span class="p-ink"></span>
+			</button>
+		</div>
+	</form>
+</div>

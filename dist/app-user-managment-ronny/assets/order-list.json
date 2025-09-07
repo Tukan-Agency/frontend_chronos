@@ -1,0 +1,166 @@
+{
+    "orden":[
+        {
+            "id_cliente:":1,
+            "id": 1000,
+            "idoperacion": "1000",
+            "fecha_operacion": "2022-05-12",
+            "estado": "Completo",
+            "total":"1585000",
+            "Acciones":"1.22"
+        },
+        {
+            "id_cliente:":1,
+            "id": 1001,
+            "idoperacion": "1001",
+            "fecha_operacion": "2022-06-10",
+            "estado": "Rechazado",
+            "total":"10004",
+            "Acciones":"-00.1"
+        },
+        {
+            "id_cliente:":1,
+            "id": 1002,
+            "idoperacion": "1002",
+            "fecha_operacion": "2022-01-12",
+            "estado": "Completo",
+            "total":"1555550",
+            "Acciones":"2.22"
+        },
+        {
+            "id_cliente:":2,
+            "id": 1003,
+            "idoperacion": "1003",
+            "fecha_operacion": "2022-05-12",
+            "estado": "En progreso",
+            "total":"201111",
+            "Acciones":"1.00"
+        },
+        {
+            "id_cliente:":2,
+            "id": 1004,
+            "idoperacion": "1004",
+            "fecha_operacion": "2022-08-20",
+            "estado": "En Progreso",
+            "total":"1304444",
+            "Acciones":"1.20"
+        },
+        {
+            "id_cliente:":2,
+            "id": 1005,
+            "idoperacion": "1005",
+            "fecha_operacion": "2022-04-30",
+            "estado": "Completo",
+            "total":"300001",
+            "Acciones":"2.21"
+        },
+        {
+            "id_cliente:":3,
+            "id": 1006,
+            "idoperacion": "1006",
+            "fecha_operacion": "2022-05-12",
+            "estado": "Completo",
+            "total":"1585000",
+            "Acciones":"1.22"
+        },
+        {
+            "id_cliente:":3,
+            "id": 1007,
+            "idoperacion": "1007",
+            "fecha_operacion": "2021-10-12",
+            "estado": "En progreso",
+            "total":"1111447",
+            "Acciones":"00.4"
+        },
+        {
+            "id_cliente:":3,
+            "id": 1008,
+            "idoperacion": "1008",
+            "fecha_operacion": "2022-03-08",
+            "estado": "Rechazado",
+            "total":"95222",
+            "Acciones":"-00.5"
+        },
+        {
+            "id_cliente:":4,
+            "id": 1009,
+            "idoperacion": "1009",
+            "fecha_operacion": "2021-12-12",
+            "estado": "En progreso",
+            "total":"85011111",
+            "Acciones":"0.10"
+        },
+        {
+            "id_cliente:":4,
+            "id": 1010,
+            "idoperacion": "1010",
+            "fecha_operacion": "2022-03-20",
+            "estado": "En progreso",
+            "total":"1500147",
+            "Acciones":"1.00"
+        },
+        {
+            "id_cliente:":4,
+            "id": 1011,
+            "idoperacion": "1011",
+            "fecha_operacion": "2022-05-08",
+            "estado": "Completado",
+            "total":"95400011",
+            "Acciones":"5.00"
+        },
+        {
+            "id_cliente:":5,
+            "id": 1012,
+            "idoperacion": "1012",
+            "fecha_operacion": "2022-01-07",
+            "estado": "Completado",
+            "total":"154440",
+            "Acciones":"2.00"
+        },
+        {
+            "id_cliente:":5,
+            "id": 1013,
+            "idoperacion": "1013",
+            "fecha_operacion": "2022-05-12",
+            "estado": "Completado",
+            "total":"192222",
+            "Acciones":"3.00"
+        },
+        {
+            "id_cliente:":5,
+            "id": 1014,
+            "idoperacion": "1014",
+            "fecha_operacion": "2021-11-20",
+            "estado": "Rechazado",
+            "total":"120011",
+            "Acciones":"-2.0"
+        },
+        {
+            "id_cliente:":6,
+            "id": 1015,
+            "idoperacion": "1015",
+            "fecha_operacion": "2022-02-08",
+            "estado": "En progreso",
+            "total":"1200014",
+            "Acciones":"1.00"
+        },
+        {
+            "id_cliente:":6,
+            "id": 1016,
+            "idoperacion": "1016",
+            "fecha_operacion": "2022-05-07",
+            "estado": "Completado",
+            "total":"1585000",
+            "Acciones":"1.22"
+        },
+        {
+            "id_cliente:":6,
+            "id": 1017,
+            "idoperacion": "1017",
+            "fecha_operacion": "2022-05-12",
+            "estado": "Rechazado",
+            "total":"201110",
+            "Acciones":"-1.00"
+        }
+    ]
+}

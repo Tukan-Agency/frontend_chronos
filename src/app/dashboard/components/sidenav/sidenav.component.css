@@ -1,0 +1,60 @@
+::ng-deep li.itemClasses{
+  padding: 5px !important;
+}
+
+::ng-deep li.dashboardItem{
+  padding-block: 25px 50px !important;
+}
+
+::ng-deep li.logOutItem{
+  padding-block: 50px 0 !important;
+}
+
+::ng-deep div.overflow-y-auto{
+  height: 100%;
+}
+
+::ng-deep div.overflow-y-auto div.p-menubar{
+  background-color: transparent;
+  border: none;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  position: initial;
+}
+
+::ng-deep div.overflow-y-auto ul{
+  flex-direction: column;
+  align-items: start;
+}
+
+::ng-deep .p-menubar-end{
+  width: 100% !important;
+}
+
+@media (max-width: 960px){
+  ::ng-deep div.overflow-y-auto ul{
+    display: flex;
+  }
+
+  ::ng-deep .clienteItem{
+    display: none;
+  }
+  ::ng-deep li.itemClasses, ::ng-deep li.dashboardItem, ::ng-deep li.logOutItem{
+    padding: 5px !important;
+  }
+
+  ::ng-deep div.hiden_name{
+    display: none;
+  }
+
+  ::ng-deep p-menubarsub.p-element{
+    width: 100%;
+    position: absolute;
+    top: 45px;
+    left: 0;
+  }
+}

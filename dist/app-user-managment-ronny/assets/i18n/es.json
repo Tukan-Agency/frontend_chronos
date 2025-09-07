@@ -1,0 +1,47 @@
+{
+    "demo": {
+        "greetings": "Bienvenido!",
+        "en": "Anglaise",
+        "es": "Español",
+        "date": "Fecha"
+    },
+    "primeng": {
+        "dayNamesMin": [
+            "Do",
+            "Lu",
+            "Ma",
+            "Mi",
+            "Ju",
+            "Vi",
+            "Sa"
+        ],
+        "monthNamesShort": [
+            "Ene",
+            "Feb",
+            "Mar",
+            "Abr",
+            "May",
+            "Jun",
+            "Jul",
+            "Ago",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dic"
+        ],
+        "monthNames": [
+            "Enero",
+            "Febrero",
+            "Marzo",
+            "Abril",
+            "Mayo",
+            "Junio",
+            "Julio",
+            "Agosto",
+            "Septiembre",
+            "Octubre",
+            "Noviembre",
+            "Diciembre"
+        ]
+    }
+}

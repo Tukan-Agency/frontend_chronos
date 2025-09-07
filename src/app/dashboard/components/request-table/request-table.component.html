@@ -1,0 +1,105 @@
+<p-table #dt [value]="requestList" responsiveLayout="scroll" styleClass="p-datatable-customers">
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="name">
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        Nombre
+                    </span>
+                    <p-sortIcon field="name"></p-sortIcon>
+                </div>
+            </th>
+            <th pSortableColumn="name">
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        Tipo
+                    </span>
+                    <p-sortIcon field="name"></p-sortIcon>
+                </div>
+            </th>
+            <th pSortableColumn="surname">
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        IBAN
+                    </span>
+                    <p-sortIcon field="apellido"></p-sortIcon>
+                </div>
+            </th>
+            <th pSortableColumn="email">
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        Banco
+                    </span>
+                    <p-sortIcon field="email"></p-sortIcon>
+                </div>
+            </th>
+            <th pSortableColumn="currency">
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        Cuenta
+                    </span>
+                    <p-sortIcon field="moneda"></p-sortIcon>
+                </div>
+            </th>
+            <th pSortableColumn="currency">
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        Monto
+                    </span>
+                    <p-sortIcon field="moneda"></p-sortIcon>
+                </div>
+            </th>
+            <th pSortableColumn="currency">
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        Fecha
+                    </span>
+                    <p-sortIcon field="moneda"></p-sortIcon>
+                </div>
+            </th>
+            <th pSortableColumn="currency">
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        Estado
+                    </span>
+                    <p-sortIcon field="moneda"></p-sortIcon>
+                </div>
+            </th>
+            <th>
+                <div class="flex justify-content-between align-items-center">
+                    <span>
+                        Estado
+                    </span>
+                </div>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-request>
+        <tr class="p-selectable-row">
+            <td>{{request.solicitud.clientName}}</td>
+            <td>{{request.solicitud.requestType}}</td>
+            <td>{{request.solicitud.ibanAccount}}</td>
+            <td>{{request.solicitud.bankName}}</td>
+            <td>{{request.solicitud.numberAccount}}</td>
+            <td>{{request.solicitud.requestedValue}}</td>
+            <td>{{request.solicitud.requestDate | date: 'dd/MM/yyyy'}}</td>
+            <td> <span
+                    [class]="'customer-badge status-' + request.colorStatus">{{request.solicitud.requestStatus}}</span>
+            </td>
+            <td>
+                <button pButton pRipple icon="pi pi-check" iconPos="right" class="p-button-success"
+                    *ngIf="request.solicitud.requestStatus === 'En proceso'"
+                    (click)="updateStatusRequest(request.solicitud, 'Finalizado')"></button>
+                <button pButton pRipple icon="pi pi-times" iconPos="right" class="p-button-danger ml-2"
+                    *ngIf="request.solicitud.requestStatus === 'En proceso'" (click)="updateStatusRequest(request.solicitud, 'Rechazado')"></button>
+                <button pButton pRipple icon="pi pi-exclamation-circle" iconPos="right" class="p-button-info ml-2"
+                    label="En proceso" *ngIf="request.solicitud.requestStatus === 'Creado' || request.solicitud.requestStatus === 'Rechazado' || request.solicitud.requestStatus === 'Finalizado'" (click)="updateStatusRequest(request.solicitud, 'En proceso')"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="8">No tiene Solicitudes registradas</td>
+        </tr>
+    </ng-template>
+</p-table>

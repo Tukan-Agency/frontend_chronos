@@ -1,0 +1,51 @@
+<ul
+  class="list-none py-3 px-5 m-0 surface-section flex align-items-center font-medium overflow-x-auto border-top-1 border-bottom-1 surface-border shadow-2 lg:shadow-none"
+>
+  <li class="pr-3">
+    <a class="cursor-pointer"><i class="pi pi-home text-blue-500"></i></a>
+  </li>
+  <li class="px-2"><i class="pi pi-angle-right text-500"></i></li>
+  <li class="px-2" *ngIf="role == 1">
+    <a class="cursor-pointer text-blue-500 white-space-nowrap">Administrador</a>
+  </li>
+  <li class="px-2" *ngIf="role == 2">
+    <a class="cursor-pointer text-blue-500 white-space-nowrap">Cliente</a>
+  </li>
+  <li class="px-2"><i class="pi pi-angle-right text-500"></i></li>
+  <li class="px-2">
+    <a class="cursor-pointer text-blue-500 white-space-nowrap">Graficos</a>
+  </li>
+</ul>
+
+<!-- Mensaje de carga, visible inicialmente -->
+<div
+  id="alertacarga"
+  class="loading-message"
+>
+  <p>Por favor espere, estamos cargando los datos...</p>
+</div>
+
+<!-- Contenedor del iframe -->
+<div class="min-h-screen flex flex-column relative flex-auto min-w-320">
+  <div class="flex flex-column flex-auto">
+    <div class="p-5">
+      <div class="grid">
+        <div class="col-12 relative">
+          <iframe
+            id="advanced_iframe"
+            name="advanced_iframe"
+            src="https://tvc-invdn-com.investing.com/web/1.12.34/index59-prod.html?carrier=e47b9c69be124c78caafd327fce2b275&amp;time=1660760768&amp;domain_ID=4&amp;lang_ID=4&amp;timezone_ID=58&amp;version=1.12.34&amp;locale=es&amp;timezone=Europe%2FMadrid&amp;pair_ID=1&amp;interval=15&amp;session=24x7&amp;prefix=es&amp;user=guest&amp;family_prefix=tvc6&amp;init_page=live-charts&amp;sock_srv=https%3A%2F%2Fstreaming.forexpros.com%3A443&amp;watchlist=1%2C2%2C3%2C9%2C5%2C7%2C6%2C945629%2C8827%2C10%2C8%2C15%2C52%2C16%2C39%2C2103%2C2110%2C2186&amp;geoc=MX&amp;site=https%3A%2F%2Fes.investing.com"
+            width="100%"
+            height="600"
+            frameborder="0"
+            allowtransparency="true"
+            loading="auto"
+            style="width: 100%; height: 600px"
+            allowfullscreen=""
+            (load)="onIframeLoad()"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

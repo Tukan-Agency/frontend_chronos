@@ -1,0 +1,107 @@
+<ul
+    class="list-none py-3 px-5 m-0 surface-section flex align-items-center font-medium overflow-x-auto border-top-1 border-bottom-1 surface-border shadow-2 lg:shadow-none">
+    <li class="pr-3"><a class="cursor-pointer"><i class="pi pi-home text-blue-500"></i></a></li>
+    <li class="px-2"><i class="pi pi-angle-right text-500"></i></li>
+    <li class="px-2"><a class="cursor-pointer text-blue-500 white-space-nowrap">Cliente</a></li>
+    <li class="px-2"><i class="pi pi-angle-right text-500"></i></li>
+    <li class="px-2"><a class="cursor-pointer text-blue-500 white-space-nowrap">Depósito</a></li>
+</ul>
+
+<div class="col-12 lg:col-12">
+    <div class="p-3 h-full">
+        <div class="shadow-2 p-3 h-full flex flex-column surface-card" style="border-radius: 6px">
+            <div class="text-900 font-medium text-xl mb-2">DEPÓSITO</div>
+            <div class="text-600">Aquí podrás realizar tu depósito</div>
+            <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
+            <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
+            <div *ngIf="itemActivo === 0" class="mt-5">
+                <div class="grid ml-3">
+                    <div class="col-0 lg:col-3"></div>
+                    <label class="mr-3 col-4 lg:col-2">NUMERO DE TARJETA</label>
+                    <input class="col-4 mb-3" type="text" pInputText>
+                    <div class="col-1 lg:col-2"></div>
+
+                    <div class="col-1 lg:col-3"></div>
+                    <label class="mr-3 col-4 lg:col-2">CSV</label>
+                    <input class="col-1 mb-3 lg:col-1" type="text" pInputText>
+                    <div class="col-3 lg:col-5"></div>
+
+                    <div class="col-1 lg:col-3"></div>
+                    <label class="mr-3 col-4 lg:col-2">FECHA DE VEN.</label>
+                    <input class="col-4 mb-3" type="text" pInputText>
+                    <div class="col-1 lg:col-2"></div>
+
+                    <div class="col-1 lg:col-3"></div>
+                    <label class="mr-3 col-4 lg:col-2">MONTO SOLICITADO</label>
+                    <input class="col-4" type="text" pInputText>
+                    <div class="col-1 lg:col-2"></div>
+                </div>
+            </div>
+            <div *ngIf="itemActivo === 1" class="mt-5">
+                <div class="grid ml-3">
+                    <div class="col-0 lg:col-3"></div>
+                    <label class="mr-3 col-4 lg:col-2">CUENTA DE IBAN</label>
+                    <input class="col-4 mb-3" type="text" pInputText [(ngModel)]="ibanAccount">
+                    <div class="col-1 lg:col-2"></div>
+
+                    <div class="col-1 lg:col-3"></div>
+                    <label class="mr-3 col-4 lg:col-2">NOMBRE DE BANCO</label>
+                    <input class="col-4 mb-3" type="text" pInputText [(ngModel)]="bankName">
+                    <div class="col-1 lg:col-2"></div>
+
+                    <div class="col-1 lg:col-3"></div>
+                    <label class="mr-3 col-4 lg:col-2">NUMERO DE CUENTA</label>
+                    <input class="col-4 mb-3" type="text" pInputText [(ngModel)]="numberAccount">
+                    <div class="col-1 lg:col-2"></div>
+
+                    <div class="col-1 lg:col-3"></div>
+                    <label class="mr-3 col-4 lg:col-2">MONTO SOLICITADO</label>
+                    <input class="col-4 mb-3" type="text" pInputText [(ngModel)]="requestedValue">
+                    <div class="col-1 lg:col-2"></div>
+                </div>
+            </div>
+            <div *ngIf="itemActivo === 2" class="mt-5 wrapper">
+              <div class="flex flex-column sm:flex-row">
+                <div class="col-1 lg:col-3"></div>
+                <label class="mr-3 col-4 lg:col-2">SELECCIONA TU PAÍS</label>
+                <mat-form-field class="choose_child sm:w-4 w-12" appearance="fill" color="accent">
+                  <mat-label>Selecciona tu país</mat-label>
+                  <mat-select style="padding: 0.5rem 0.7rem 0.5rem 0.3rem;" [(value)]="selected" (selectionChange)="getBankOptions(selected)">
+                    <mat-option *ngFor="let bankName of bankNames" [value]="bankName">{{bankName}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="col-1 lg:col-2"></div>
+              </div>
+
+              <div class="flex flex-column sm:flex-row" *ngIf="selected !== 'Null'">
+                <div class="col-1 lg:col-3"></div>
+                <label class="mr-3 col-4 lg:col-2 pb-2">SELECCIONA TU BANCO</label>
+                <mat-form-field class="choose_child sm:w-4 w-12" appearance="fill" color="accent">
+                  <mat-label>Bancos disponibles</mat-label>
+                  <mat-select style="padding: 0.5rem 0.7rem 0.5rem 0.3rem;" [(value)]="bankName">
+                    <mat-option *ngFor="let bankOption of bankOptions" [value]="bankOption">{{bankOption}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="col-1 lg:col-2"></div>
+              </div>
+
+              <div class="flex flex-column sm:flex-row">
+                <div class="col-1 lg:col-3"></div>
+                <label class="mr-3 col-4 lg:col-2 pb-2">MONTO SOLICITADO</label>
+                <input class="col-4 mb-3 sm:w-4 w-12" type="text" pInputText [(ngModel)]="requestedValue">
+                <div class="col-1 lg:col-2"></div>
+              </div>
+
+            </div>
+            <div *ngIf="itemActivo === 3" class="mt-5">
+                <div class="grid ml-3">
+                    <h2>En construcción</h2>
+                </div>
+            </div>
+            <hr class="mb-3 mt-3 mx-0 border-top-1 border-none surface-border" />
+            <button *ngIf="itemActivo === 2" pButton pRipple label="Enviar" class="p-3 w-3 align-self-center" (click)="createRequest()"></button>
+        </div>
+    </div>
+</div>
+
+<p-toast></p-toast>

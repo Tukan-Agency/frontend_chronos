@@ -1,0 +1,57 @@
+<div
+	class="align-items-center flex justify-content-center surface-ground ng-star-inserted min-h-screen login-wrapper min-w-320"
+>
+	<div class="surface-card p-7 shadow-3 border-round w-6 responsive-div-login">
+		<div class="text-center mb-5">
+			<div>
+				<img src="../../../../assets/Img/chronologo.png" class="col-12" />
+			</div>
+			<div class="text-900 text-5xl font-medium mb-3">Bienvenido</div>
+			<div class="flex flex-wrap justify-content-center gap-2 align-items-center">
+				<span class="text-700 font-medium line-height-3 text-2xl">
+					¿No tienes una cuenta?
+				</span>
+				<a
+					class="font-medium no-underline text-blue-500 cursor-pointer text-2xl"
+					routerLink="/auth/registro/personalData"
+				>
+					Creala hoy!
+				</a>
+			</div>
+		</div>
+		<div>
+			<form
+				class="grid formgrid p-fluid justify-content-center"
+				autocomplete="off"
+				[formGroup]="loginForm"
+				(ngSubmit)="login()"
+			>
+				<div class="field mb-4 col-12 md:col-12">
+					<label for="email" class="font-medium text-900">Correo electronico</label>
+					<input
+						id="email"
+						type="text"
+						placeholder="Ingrese su Correo electronico"
+						formControlName="email"
+						class="p-inputtext p-component p-element"
+					/>
+				</div>
+				<div class="field mb-4 col-12">
+					<label class="font-medium text-900">Contraseña</label>
+					<p-password [feedback]="false" formControlName="password"></p-password>
+				</div>
+				<div class="flex align-items-center justify-content-between mb-6">
+					<div class="flex align-items-center"></div>
+				</div>
+				<button
+					class="w-8"
+					type="submit"
+					pButton
+					pRipple
+					label="Iniciar sesion"
+					icon="pi pi-sign-in"
+				></button>
+			</form>
+		</div>
+	</div>
+</div>

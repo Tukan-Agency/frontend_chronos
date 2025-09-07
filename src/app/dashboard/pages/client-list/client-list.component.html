@@ -1,0 +1,31 @@
+<ul
+	class="list-none py-3 px-5 m-0 surface-section flex align-items-center font-medium overflow-x-auto border-top-1 border-bottom-1 surface-border shadow-2 lg:shadow-none"
+>
+	<li class="pr-3">
+		<a class="cursor-pointer"><i class="pi pi-home text-blue-500"></i></a>
+	</li>
+	<li class="px-2"><i class="pi pi-angle-right text-500"></i></li>
+	<li class="px-2" *ngIf="role == 1">
+		<a class="cursor-pointer text-blue-500 white-space-nowrap">Administrador</a>
+	</li>
+	<li class="px-2" *ngIf="role == 2">
+		<a class="cursor-pointer text-blue-500 white-space-nowrap">Cliente</a>
+	</li>
+	<li class="px-2"><i class="pi pi-angle-right text-500"></i></li>
+	<li class="px-2">
+		<a class="cursor-pointer text-blue-500 white-space-nowrap">
+			Lista de Clientes
+		</a>
+	</li>
+</ul>
+<div class="md:p-5 p-4 min-w-320">
+	<app-clients-table></app-clients-table>
+	<!--    <div class="flex flex-column flex-auto">-->
+	<!--        <div class="p-5">-->
+	<!--            <div class="grid">-->
+	<!--                <div class="w-auto">-->
+	<!--                </div>-->
+	<!--            </div>-->
+	<!--        </div>-->
+	<!--    </div>-->
+</div>

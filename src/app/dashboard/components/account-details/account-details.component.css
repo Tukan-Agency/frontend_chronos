@@ -1,0 +1,9 @@
+.my-account-wrapper>h3{
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.my-account-wrapper>h2:nth-child(3){
+  margin-top: 20px;
+  font-size: large;
+}

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Conectando Oportunidades con Inversores</title>
+		<base href="/">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/primeflex/themes/vela-blue.css"
+		/>
+		<link rel="icon" type="image/x-icon" href="favicon.ico" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet"
+		/>
+	</head>
+	<body class="mat-typography">
+		<app-root></app-root>
+	</body>
+</html>
+<style>
+	:root {
+		--surface-a: #1f2d40;
+		--surface-b: #17212f;
+		--surface-c: rgba(255, 255, 255, 0.03);
+		--surface-d: #304562;
+		--surface-e: #1f2d40;
+		--surface-f: #1f2d40;
+		--text-color: rgba(0, 0, 0, 0.87);
+		--text-color-secondary: rgba(73, 73, 73, 0.6);
+		--primary-color: #64b5f6;
+		--primary-color-text: #212529;
+		--font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica,
+			Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+		--surface-0: #17212f;
+		--surface-50: #2e3744;
+		--surface-100: #454d59;
+		--surface-200: #5d646d;
+		--surface-300: #747a82;
+		--surface-400: #8b9097;
+		--surface-500: #a2a6ac;
+		--surface-600: #505050;
+		--surface-700: #000000;
+		--surface-800: #e8e9ea;
+		--surface-900: #0a0a0a;
+		--gray-50: #e8e9ea;
+		--gray-100: #d1d3d5;
+		--gray-200: #b9bcc1;
+		--gray-300: #a2a6ac;
+		--gray-400: #8b9097;
+		--gray-500: #747a82;
+		--gray-600: #5d646d;
+		--gray-700: #454d59;
+		--gray-800: #2e3744;
+		--gray-900: #e9e9e9;
+		--content-padding: 1rem;
+		--inline-spacing: 0.5rem;
+		--border-radius: 3px;
+		--surface-ground: #ffffff;
+		--surface-section: #ffffff;
+		--surface-card: #eeeeee99;
+		--surface-overlay: #1f2d40;
+		--surface-border: #ffffff !important;
+		--surface-hover: rgba(56, 56, 56, 0.03);
+		--maskbg: rgba(0, 0, 0, 0.4);
+		--focus-ring: 0 0 0 1px #93cbf9;
+		color-scheme: light dark;
+	}
+	.p-datatable .p-datatable-tbody > tr {
+		background: #f8f8f8;
+		color: rgb(0 0 0 / 87%);
+		transition: box-shadow 0.2s;
+	}
+	.p-dialog .p-dialog-content {
+		background: #ffffff;
+		color: rgba(0, 0, 0, 0.87);
+		padding: 0 1.5rem 2rem 1.5rem;
+	}
+	.p-dialog .p-dialog-footer {
+		border-top: 0 none;
+		background: #ffffff;
+		color: rgb(0 0 0 / 87%);
+		padding: 0 1.5rem 1.5rem 1.5rem;
+		text-align: right;
+		border-bottom-right-radius: 3px;
+		border-bottom-left-radius: 3px;
+	}
+	.p-dialog {
+		border-radius: 3px;
+		box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2),
+			0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+		border: 1px solid #ffffff;
+	}
+	.hover\:surface-100:hover {
+		background-color: #454d591a !important;
+	}
+	.p-steps .p-steps-item.p-highlight .p-steps-title {
+		font-weight: 600;
+		color: rgb(0 0 0 / 87%);
+	}
+	.p-steps .p-steps-item .p-menuitem-link .p-steps-title {
+		margin-top: 0.5rem;
+		color: rgba(0, 0, 0, 0.6);
+	}
+	.p-dialog .p-dialog-header {
+		border-bottom: 0 none;
+		background: #ffffff;
+		color: rgb(0 0 0 / 87%);
+		padding: 1.5rem;
+		border-top-right-radius: 3px;
+		border-top-left-radius: 3px;
+	}
+	.p-button {
+		color: #000000 !important;
+	}
+	.p-paginator {
+		background: #ffffff;
+		color: rgb(0 0 0 / 86%) !important;
+		border: solid #d7d7d7;
+		border-width: 1px;
+		padding: 0.5rem 1rem;
+		border-radius: 3px;
+	}
+	.p-paginator .p-paginator-current {
+		color: rgb(0 0 0 / 60%);
+	}
+	.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+		background: rgba(100, 181, 246, 0.16);
+		border-color: rgba(100, 181, 246, 0.16);
+		color: rgb(0 0 0 / 87%);
+	}
+	.p-paginator .p-paginator-pages .p-paginator-page {
+		color: rgb(0 0 0 / 60%);
+	}
+	.p-dropdown {
+		background: #ffffff;
+		border: 1px solid #304562;
+		transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+			box-shadow 0.2s;
+		border-radius: 3px;
+	}
+
+	.p-datatable .p-datatable-thead > tr > th {
+		text-align: left;
+		padding: 1rem 1rem;
+		border: 1px solid #ffffff;
+		border-width: 0 0 1px 0;
+		font-weight: 600;
+		color: rgb(0 0 0 / 87%) !important;
+		background: #dbdbdb2f !important;
+		transition: box-shadow 0.2s;
+	}
+	.p-datatable .p-datatable-header {
+		background: #ffffff;
+		color: rgb(0 0 0) !important;
+		border: 1px solid #ffffff;
+		border-width: 0 0 1px 0;
+		padding: 1rem 1rem;
+		font-weight: 600;
+	}
+	.p-menubar {
+		padding: 0.5rem;
+		background: #dbdbdb2f !important;
+		color: rgb(0 0 0 / 87%) !important;
+		border: none !important;
+		border-radius: 3px;
+	}
+	.p-menubar
+		.p-menubar-root-list
+		> .p-menuitem
+		> .p-menuitem-link
+		.p-menuitem-text {
+		color: rgb(0 0 0 / 87%);
+	}
+	.p-menubar
+		.p-menubar-root-list
+		> .p-menuitem
+		> .p-menuitem-link
+		.p-menuitem-icon {
+		color: rgb(0 0 0 / 60%);
+	}
+	.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link {
+		border-radius: 12px !important;
+	}
+	.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:hover {
+		background: #818181 !important;
+		transition: 0.3s;
+		border-radius: 12px;
+		color: #000000 !important;
+	}
+	.p-inputtext {
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+			Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+		font-size: 1rem;
+		color: rgb(105 105 105 / 87%);
+		background: #dddddd;
+		padding: 0.5rem 0.5rem;
+		border: 1px solid #304562;
+		transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+			box-shadow 0.2s;
+		-webkit-appearance: none;
+		appearance: none;
+		border-radius: 3px;
+	}
+
+	input::placeholder {
+		color: #888888; /* Cambia este valor por el color que desees */
+	}
+	body {
+		color: #000000;
+	}
+</style>

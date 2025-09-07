@@ -1,0 +1,12 @@
+<div class="surface-card shadow-2 border-round p-3" *ngIf="showOrdenChart">
+    <div class="card">
+        <h2>Orden</h2>
+        <p-chart type="bar" [data]="dataChart" class=""></p-chart>
+    </div>
+</div>
+<div class="surface-card shadow-2 border-round p-3 mt-2" *ngIf="!showOrdenChart">
+    <div class="card">
+        <h2>Movimientos</h2>
+      <p-chart type="bar" [data]="dataChart" [height]="windowHeight < 500 ? 'null': '400px'"></p-chart>
+    </div>
+</div>

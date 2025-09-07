@@ -1,0 +1,343 @@
+<ul
+	class="list-none py-3 px-5 m-0 surface-section flex align-items-center font-medium overflow-x-auto border-top-1 border-bottom-1 surface-border shadow-2 lg:shadow-none"
+>
+	<li class="pr-3">
+		<a class="cursor-pointer"><i class="pi pi-home text-blue-500"></i></a>
+	</li>
+	<li class="px-2"><i class="pi pi-angle-right text-500"></i></li>
+	<li class="px-2" *ngIf="role == 1">
+		<a class="cursor-pointer text-blue-500 white-space-nowrap">Administrador</a>
+	</li>
+	<li class="px-2" *ngIf="role == 2">
+		<a class="cursor-pointer text-blue-500 white-space-nowrap">Cliente</a>
+	</li>
+	<li class="px-2"><i class="pi pi-angle-right text-500"></i></li>
+	<li class="px-2">
+		<a class="cursor-pointer text-blue-500 white-space-nowrap">Detalle Cuenta</a>
+	</li>
+</ul>
+<div class="flex flex-column flex-auto min-w-320">
+	<div class="surface-section p-5">
+		<div
+			class="flex align-items-start flex-column lg:flex-row lg:justify-content-between"
+		>
+			<div class="flex align-items-start flex-column md:flex-row">
+				<div>
+					<span class="text-900 font-medium text-3xl">
+						{{ usuario.name }}
+					</span>
+					<i class="pi pi-star text-2xl ml-4 text-yellow-500"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="p-3 md:p-5">
+		<div class="grid">
+			<div class="col-12 lg:col-3"></div>
+			<div class="col-12 lg:col-6">
+				<div class="surface-card p-4 shadow-2 border-round">
+					<div
+						class="font-medium text-3xl text-900 mb-3 div-change-password-and-information"
+					>
+						INFORMACIÓN
+					</div>
+					<div class="text-500 mb-5 d-flex edit-wrapper">
+						Aquí tienes toda tu información personal.
+						<div class="text-900 w-6 md:w-2 flex justify-content-end">
+							<button (click)="openEditClient()">
+								Editar
+								<i class="ml-1 pi pi-user-edit"></i>
+							</button>
+						</div>
+					</div>
+					<ul class="list-none p-0 m-0">
+						<li
+							class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+						>
+							<div class="text-500 w-6 md:w-3 font-medium">Nombre</div>
+							<div class="text-900 w-full md:w-7 md:flex-order-0 flex-order-1">
+								{{ usuario.name }}
+							</div>
+							<div class="w-6 md:w-2 flex justify-content-end">
+								<i class="pi pi-user"></i>
+							</div>
+						</li>
+						<li
+							class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+						>
+							<div class="text-500 w-6 md:w-3 font-medium">Apellido</div>
+							<div class="text-900 w-full md:w-7 md:flex-order-0 flex-order-1">
+								{{ usuario.surname }}
+							</div>
+							<div class="w-6 md:w-2 flex justify-content-end">
+								<i class="pi pi-id-card"></i>
+							</div>
+						</li>
+						<li
+							class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+						>
+							<div class="text-500 w-6 md:w-3 font-medium">Dirección</div>
+							<div class="text-900 w-full md:w-7 md:flex-order-0 flex-order-1">
+								{{ usuario.address }}
+							</div>
+							<div class="w-6 md:w-2 flex justify-content-end">
+								<i class="pi pi-map-marker"></i>
+							</div>
+						</li>
+						<!--                        <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">-->
+						<!--                            <div class="text-500 w-6 md:w-3 font-medium">-->
+						<!--                                Ciudad-->
+						<!--                            </div>-->
+						<!--                            <div class="text-900 w-full md:w-7 md:flex-order-0 flex-order-1">-->
+						<!--                                {{usuario.surname}}-->
+						<!--                            </div>-->
+						<!--                            <div class="w-6 md:w-2 flex justify-content-end">-->
+						<!--                                <i class="pi pi-map-marker"></i>-->
+						<!--                            </div>-->
+						<!--                        </li>-->
+						<li
+							class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+						>
+							<div class="text-500 w-6 md:w-3 font-medium">País</div>
+							<div class="text-900 w-full md:w-7 md:flex-order-0 flex-order-1">
+								{{ usuario.country.name }}
+							</div>
+							<div class="w-6 md:w-2 flex justify-content-end">
+								<i class="pi pi-map-marker"></i>
+							</div>
+						</li>
+						<li
+							class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+						>
+							<div class="text-500 w-6 md:w-3 font-medium">Correo</div>
+							<div class="text-900 w-full md:w-7 md:flex-order-0 flex-order-1">
+								{{ usuario.email }}
+							</div>
+							<div class="w-6 md:w-2 flex justify-content-end">
+								<i class="pi pi-envelope"></i>
+							</div>
+						</li>
+						<li
+							class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+						>
+							<div class="text-500 w-6 md:w-3 font-medium">Compañia</div>
+							<div class="text-900 w-full md:w-7 md:flex-order-0 flex-order-1">
+								{{ usuario.company }}
+							</div>
+							<div class="w-6 md:w-2 flex justify-content-end">
+								<i class="pi pi-briefcase"></i>
+							</div>
+						</li>
+						<li
+							class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+						>
+							<div class="text-500 w-6 md:w-3 font-medium">Télefono de contacto</div>
+							<div class="text-900 w-full md:w-7 md:flex-order-0 flex-order-1">
+								{{ usuario.contactNumber }}
+							</div>
+							<div class="w-6 md:w-2 flex justify-content-end">
+								<i class="pi pi-phone"></i>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-12 lg:col-3"></div>
+			<div class="col-12 lg:col-3"></div>
+			<div class="col-12 lg:col-6">
+				<div
+					class="surface-card p-4 shadow-2 border-round flex justify-content-center flex-column"
+				>
+					<div
+						class="font-medium text-3xl text-900 mb-3 div-change-password-and-information"
+					>
+						CAMBIAR CONTRASEÑA
+					</div>
+					<div class="text-500 mb-5">Aquí podrás cambiar tu contrsaeña</div>
+					<div class="grid md:ml-3">
+						<span class="mt-3 col-12">
+							<label class="mr-3 md:col-4 col-12">Contraseña Nueva</label>
+							<input
+								class="md:col-8 col-12"
+								type="text"
+								pInputText
+								placeholder="Ingrese contraseña nueva"
+								[(ngModel)]="newPassword"
+							/>
+						</span>
+					</div>
+					<hr class="mb-3 mt-3 mx-0 border-top-1 border-none surface-border" />
+					<button
+						pButton
+						pRipple
+						label="Cambiar Contraseña"
+						class="p-3 w-full p-button-danger"
+						icon="pi pi-lock"
+						(click)="cambiarPassword()"
+					></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- FORMULARIO EDITAR CLIENTE -->
+<p-dialog
+	(onHide)="deleteData()"
+	[(visible)]="displayModel"
+	[style]="windowWidth > 960 ? { width: '45%' } : { width: '90%' }"
+	header="Editar Cliente"
+	[modal]="true"
+	styleClass="p-fluid min-w-320"
+>
+	<ng-template pTemplate="content">
+		<div class="flex flex-column align-items-center p-fluid">
+			<div class="field mb-4 col-12 md:col-10">
+				<label for="name" class="font-medium text-900">Nombre</label>
+				<span>
+					<input
+						id="name"
+						type="text"
+						[(ngModel)]="name"
+						class="p-inputtext p-component p-element"
+					/>
+				</span>
+			</div>
+			<div class="field mb-4 col-12 md:col-10">
+				<label for="surname" class="font-medium text-900">Apellido</label>
+				<span>
+					<input
+						id="surname"
+						type="text"
+						[(ngModel)]="surname"
+						class="p-inputtext p-component p-element"
+					/>
+				</span>
+			</div>
+			<div class="field mb-4 col-12 md:col-10">
+				<label for="birthday" class="font-medium text-900">Fecha nacimiento</label>
+				<p-calendar
+					[(ngModel)]="birthday"
+					dateFormat="dd/mm/yy"
+					placeholder="dd/mm/yy"
+				></p-calendar>
+			</div>
+			<div class="field mb-4 col-12 md:col-10">
+				<label for="birthday" class="font-medium text-900">Fecha Actual:</label>
+				<input
+					type="text"
+					disabled
+					[value]="this.usuario.birthday | date : 'MM/dd/yyyy'"
+					class="p-inputtext p-component p-element"
+				/>
+			</div>
+			<div class="field mb-4 col-12 md:col-10">
+				<label for="email" class="font-medium text-900">Correo electrónico</label>
+				<span class="p-input-icon-left">
+					<i class="pi pi-envelope"></i>
+					<input
+						id="email"
+						type="email"
+						[(ngModel)]="email"
+						class="p-inputtext p-component p-element"
+					/>
+				</span>
+			</div>
+			<div class="field mb-4 col-12 md:col-10">
+				<label for="address" class="font-medium text-900">Dirección</label>
+				<span class="p-input-icon-left">
+					<i class="pi pi-map-marker"></i>
+					<input
+						id="address"
+						type="text"
+						[(ngModel)]="address"
+						class="p-inputtext p-component p-element"
+					/>
+				</span>
+			</div>
+			<div class="field mb-4 col-12 md:col-10">
+				<label for="contactNumber" class="font-medium text-900">Celular</label>
+				<span class="p-input-icon-left">
+					<i class="pi pi-mobile"></i>
+					<input
+						id="contactNumber"
+						type="text"
+						[(ngModel)]="contactNumber"
+						class="p-inputtext p-component p-element"
+					/>
+				</span>
+			</div>
+			<div class="field mb-4 col-12 md:col-10">
+				<label for="whatsapp" class="font-medium text-900">Whatsapp</label>
+				<span class="p-input-icon-left">
+					<i class="pi pi-whatsapp"></i>
+					<input
+						id="whatsapp"
+						type="text"
+						[(ngModel)]="whatsapp"
+						class="p-inputtext p-component p-element"
+					/>
+				</span>
+			</div>
+			<div class="field mb-4 col-12 md:col-10">
+				<label for="country" class="font-medium text-900">País</label>
+				<p-dropdown
+					[options]="countries"
+					[(ngModel)]="country"
+					optionLabel="translations.spa.common"
+					(onChange)="setCurrencyDropBox(country)"
+				></p-dropdown>
+			</div>
+			<div class="field mb-4 col-12 md:col-10">
+				<label for="country" class="font-medium text-900">País Actual:</label>
+				<input
+					type="text"
+					disabled
+					[value]="this.usuario.country!.name"
+					class="p-inputtext p-component p-element"
+				/>
+			</div>
+			<div class="field mb-4 col-12 md:col-10">
+				<label for="company" class="font-medium text-900">Compañía</label>
+				<span class="p-input-icon-left">
+					<i class="pi pi-building"></i>
+					<input
+						id="company"
+						type="text"
+						[(ngModel)]="company"
+						class="p-inputtext p-component p-element"
+					/>
+				</span>
+			</div>
+			<div class="field mb-4 col-12 md:col-10">
+				<label for="currency" class="font-medium text-900">Moneda</label>
+				<p-dropdown
+					[options]="currencys"
+					[(ngModel)]="currency"
+					optionLabel="name"
+					[disabled]="true"
+				></p-dropdown>
+			</div>
+			<div class="surface-border border-top-1 opacity-50 mb-4 col-12"></div>
+		</div>
+	</ng-template>
+	<ng-template pTemplate="footer">
+		<button
+			pButton
+			pRipple
+			label="Cancelar"
+			icon="pi pi-times"
+			class="p-button-danger p-button-text"
+			(click)="deleteData()"
+		></button>
+		<button
+			pButton
+			pRipple
+			label="Guardar"
+			icon="pi pi-check"
+			class="p-button-success p-button-text"
+			(click)="updateClient()"
+		></button>
+	</ng-template>
+</p-dialog>
+<p-toast></p-toast>
